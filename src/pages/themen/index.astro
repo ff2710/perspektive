@@ -15,7 +15,10 @@ const tags = collectTags(await getPosts());
 					<li>
 						<a href={url(`/themen/${tag.slug}/`)}>
 							{tag.name}
-							<small>{tag.count}</small>
+							<small>
+										{tag.count}
+										<span class="visually-hidden"> Beiträge</span>
+									</small>
 						</a>
 					</li>
 				))}

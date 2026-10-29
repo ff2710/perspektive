@@ -21,7 +21,7 @@ const nav = [
 	{ label: 'Themen', href: url('/themen/') },
 	{ label: 'Über mich', href: url('/ueber-mich/') },
 ];
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.replace(/\/?$/, '/');
 const Wordmark = home ? 'h1' : 'p';
 ---
 
@@ -45,7 +45,7 @@ const Wordmark = home ? 'h1' : 'p';
 				<nav class="nav" aria-label="Hauptnavigation">
 					{
 						nav.map((item) => (
-							<a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+							<a href={item.href} aria-current={path === item.href ? 'page' : path.startsWith(item.href) ? 'true' : undefined}>
 								{item.label}
 							</a>
 						))

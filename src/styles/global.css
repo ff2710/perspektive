@@ -93,6 +93,15 @@ img {
 	top: 0.75rem;
 }
 
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
 .wrap {
 	max-width: var(--page);
 	margin-inline: auto;
@@ -288,6 +297,9 @@ a.pill:hover {
 	position: absolute;
 	inset: 0;
 }
+.feature__title a:focus-visible {
+	outline: none;
+}
 .feature__title a:hover {
 	color: var(--contrast);
 }
@@ -300,6 +312,11 @@ a.pill:hover {
 }
 .feature .pills {
 	position: relative;
+	align-self: flex-start;
+}
+.feature:has(.feature__title a:focus-visible) {
+	outline: 2px solid var(--contrast);
+	outline-offset: 3px;
 }
 .feature .pill {
 	background: var(--paper);

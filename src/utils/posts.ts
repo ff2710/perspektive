@@ -9,7 +9,7 @@ export const formatDate = (date: Date) => dateFormat.format(date);
 /** Alle veröffentlichten Beiträge, neueste zuerst. */
 export async function getPosts(): Promise<Post[]> {
 	const posts = await getCollection('posts', ({ data }) => !data.draft);
-	return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+	return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf() || a.id.localeCompare(b.id));
 }
 
 /** Lesezeit in Minuten (ca. 200 Wörter pro Minute, mindestens 1). */

@@ -25,7 +25,7 @@ const tags = collectTags(posts);
 						<Pills tags={featured.data.tags} />
 					</article>
 
-					<aside class="latest" aria-labelledby="zuletzt">
+					<section class="latest" aria-labelledby="zuletzt">
 						<h2 class="section-title" id="zuletzt">
 							Zuletzt
 						</h2>
@@ -43,7 +43,7 @@ const tags = collectTags(posts);
 						) : (
 							<p class="empty">Weitere Beiträge folgen.</p>
 						)}
-					</aside>
+					</section>
 				</div>
 
 				{tags.length > 0 && (
@@ -56,7 +56,10 @@ const tags = collectTags(posts);
 								<li>
 									<a href={url(`/themen/${tag.slug}/`)}>
 										{tag.name}
-										<small>{tag.count}</small>
+										<small>
+										{tag.count}
+										<span class="visually-hidden"> Beiträge</span>
+									</small>
 									</a>
 								</li>
 							))}

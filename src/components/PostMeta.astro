@@ -8,7 +8,7 @@ const { post } = Astro.props;
 ---
 
 <p class="meta">
-	<b>Fidel</b> · <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time> · {
+	<b>Fidel</b> · <time datetime={post.data.pubDate.toISOString().slice(0, 10)}>{formatDate(post.data.pubDate)}</time> · {
 		readingMinutes(post)
 	}&nbsp;Min. Lesezeit
 </p>
