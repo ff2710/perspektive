@@ -39,15 +39,17 @@ Quelle: Palette „Keimling und Himmel" (`#FFFEFB #D7F9F1 #9BE7FF #3A86FF #2D6A4
 | Akzent-Füllung (Balken, Pills auf Dunkel) | `--accent` | `#A9DFC0` (Salbei) | `#A9DFC0` |
 | Pill-Hintergrund | `--accent-tint` | `#E4F4EA` | `#25382C` |
 | Grüner Text (Initiale, Fußnotenzahl, Pill-Schrift) | `--accent-text` | `#2D6A4F` (6,3:1) | `#A9DFC0` (12,1:1) |
-| Kontrast: Hover, Fokus, Auswahl | `--contrast` | `#1B5FC4` (6,0:1; Füllung `#3A86FF`) | `#8DB8FF` (9,0:1) |
+| Kontrast: Belege, Hover, Fokus, Auswahl | `--contrast` | `#1B5FC4` (6,0:1; Füllung `#3A86FF`) | `#8DB8FF` (9,0:1) |
+| Link-Unterstreichung im Text | `--link-line` | `#3A86FF` (3,45:1) | `#8DB8FF` |
+| Balken am Aufmacher | `--feature-bar` | `#2D6A4F` (5,7:1 auf Mint) | `#A9DFC0` |
 | Markierung / Textauswahl | `--mark` | `#9BE7FF` | `#1F4D66` |
-| „Weiterlesen"-Fläche | `--band` / `--band-ink` | `#0F1A14` / `#FFFEFB` | `#0B0B0B` / `#ECECEC` |
+| „Weiterlesen"-Fläche | `--band` / `--band-ink` | `#0F1A14` / `#FFFEFB` | `#ECECEC` / `#161616` (invertiert, sonst nur 1,1:1 zum Grund) |
 
-Regeln: Grün trägt die Marke (Pills, Balken, Initiale), Blau reagiert (Hover, Fokus, Textauswahl, Fußnoten-Hover). Blau `#3A86FF` nur als Füllung, als Text immer `--contrast`. Hell und Dunkel gleichwertig. Die Seite startet immer hell (auch bei dunklem System), ein Schalter in der Navigation wechselt, die Wahl liegt im localStorage. Der Dunkelmodus ist neutrales Anthrazit ohne Farbstich; nur die Akzente (Salbei, Himmelblau) bleiben farbig. Alle dunklen Textpaarungen ≥ 4,5:1 (gemessen).
+Regeln: Grün trägt die Marke und Struktur (Pills, Balken, Initiale, Endquadrat), **Blau steht für Belege und Interaktion** (Link-Unterstreichung, Fußnotenzahl, Hover, Fokus, Textauswahl). Blau `#3A86FF` nur als Füllung, als Text immer `--contrast`. Hell und Dunkel gleichwertig. Die Seite startet immer hell (auch bei dunklem System), ein Schalter in der Navigation wechselt, die Wahl liegt im localStorage. Der Dunkelmodus ist neutrales Anthrazit ohne Farbstich; nur die Akzente (Salbei, Himmelblau) bleiben farbig. Alle dunklen Textpaarungen ≥ 4,5:1 (gemessen).
 
 ## Typografie
 
-- **Schlagzeilen und Schriftzug:** Archivo Variable, Gewicht **650**, normale Breite, Laufweite −0.03 bis −0.035em, Zeilenhöhe 1.0–1.1. Maximal 6rem.
+- **Schlagzeilen und Schriftzug** (Schriftzug, Aufmacher-Titel, Seiten- und Beitragstitel): Archivo Variable, Gewicht **700**, **Breite 85 %** (schmaler), Laufweite −0.02 bis −0.025em, Zeilenhöhe 1.0–1.1. Maximal 6rem. Übrige Überschriften (h2, Listen, Meta): Gewicht 650, normale Breite.
 - **Fließtext, Einleitungen, Listen-Titel:** Source Serif 4 Variable, Fließtext 1.25rem/1.6, Einleitung kursiv 1.3rem.
 - **Meta, Navigation, Pills, Fußnotenzahlen:** Archivo, 0.8–0.95rem, Gewicht 500–650.
 - Selbst gehostet über Fontsource (`@fontsource-variable/archivo`, `@fontsource-variable/source-serif-4`), keine Google-Server.

@@ -15,7 +15,10 @@
 	--contrast: #1b5fc4;
 	--mark: #9be7ff;
 	--switch-track: #e6ebe6;
-	--switch-edge: #aab4ac;
+	--switch-edge: #7d8880;
+	--link-line: #3a86ff;
+	--feature-bar: #2d6a4f;
+	--band-hover: #a9dfc0;
 	--switch-thumb: #a9dfc0;
 	--switch-on: #0f1a14;
 	--band: #0f1a14;
@@ -45,11 +48,14 @@
 	--contrast: #8db8ff;
 	--mark: #1f4d66;
 	--switch-track: #2b2b2b;
-	--switch-edge: #5a5a5a;
+	--switch-edge: #8a8a8a;
+	--link-line: #8db8ff;
+	--feature-bar: #a9dfc0;
+	--band-hover: #2d6a4f;
 	--switch-thumb: #a9dfc0;
 	--switch-on: #0f1a14;
-	--band: #0b0b0b;
-	--band-ink: #ececec;
+	--band: #ececec;
+	--band-ink: #161616;
 }
 
 *,
@@ -157,9 +163,10 @@ img {
 .wordmark {
 	margin: 0;
 	font-family: var(--sans);
-	font-weight: 650;
+	font-weight: 700;
+	font-stretch: 85%; /* schmaler gesetzt: mehr Schlagzeilen-Wirkung wie in Zeitungen */
 	font-size: 1.6rem;
-	letter-spacing: -0.03em;
+	letter-spacing: -0.02em;
 	line-height: 1;
 }
 .wordmark a {
@@ -167,7 +174,8 @@ img {
 }
 .is-home .wordmark {
 	font-size: clamp(2.4rem, 7vw, 5rem);
-	letter-spacing: -0.035em;
+	letter-spacing: -0.025em;
+	word-spacing: 0.06em;
 }
 .nav {
 	display: flex;
@@ -186,7 +194,7 @@ img {
 	color: var(--contrast);
 }
 .nav > a[aria-current] {
-	border-bottom-color: var(--accent);
+	border-bottom-color: var(--accent-text);
 }
 /* Suchleiste im Kopf: tippen zeigt sofort Treffer (angelehnt an ein Uiverse-Beispiel, auf die Seite angepasst) */
 .search-box {
@@ -529,15 +537,17 @@ a.pill:hover {
 	position: absolute;
 	inset: 0 auto 0 0;
 	width: 0.6rem;
-	background: var(--accent);
+	background: var(--feature-bar);
 }
 .feature__title {
 	margin: 0;
 	max-width: 14ch;
 	font-family: var(--sans);
-	font-weight: 650;
+	font-weight: 700;
+	font-stretch: 85%;
 	font-size: clamp(2.4rem, 6vw, 5rem);
-	letter-spacing: -0.035em;
+	letter-spacing: -0.025em;
+	word-spacing: 0.06em;
 	line-height: 1;
 	text-wrap: balance;
 }
@@ -638,9 +648,10 @@ a.pill:hover {
 .page-title {
 	margin: 0 0 1rem;
 	font-family: var(--sans);
-	font-weight: 650;
+	font-weight: 700;
+	font-stretch: 85%;
 	font-size: clamp(2.2rem, 6vw, 3.4rem);
-	letter-spacing: -0.03em;
+	letter-spacing: -0.02em;
 	line-height: 1.05;
 	text-wrap: balance;
 }
@@ -869,8 +880,8 @@ a.pill:hover {
 }
 .prose a {
 	text-decoration: underline;
-	text-decoration-color: var(--accent);
-	text-decoration-thickness: 3px;
+	text-decoration-color: var(--link-line);
+	text-decoration-thickness: 2px;
 	text-underline-offset: 3px;
 	transition: color 150ms, text-decoration-color 150ms;
 }
@@ -913,11 +924,25 @@ a.pill:hover {
 	vertical-align: 0.05em;
 }
 .prose sup a {
+	position: relative;
 	font-family: var(--sans);
 	font-weight: 650;
-	font-size: 0.8em;
+	font-size: 0.95em;
 	text-decoration: none;
-	color: var(--accent-text);
+	color: var(--contrast);
+}
+/* unsichtbare, größere Trefferfläche (Finger und Zeiger treffen die kleine Zahl leichter) */
+.prose sup a::after {
+	content: '';
+	position: absolute;
+	inset: -0.7rem -0.55rem;
+}
+.prose a[data-footnote-backref] {
+	display: inline-block;
+	padding: 0.3rem 0.5rem;
+	margin: -0.3rem -0.2rem;
+	text-decoration: none;
+	color: var(--contrast);
 }
 .prose sup a:hover {
 	color: var(--contrast);
@@ -1038,7 +1063,7 @@ a.pill:hover {
 
 /* Weiterlesen: eigene Fläche in voller Breite hinter dem Artikel */
 .further {
-	padding-block: 5rem;
+	padding-block: clamp(3rem, 6vw, 5rem);
 	background: var(--band);
 	color: var(--band-ink);
 }
@@ -1058,6 +1083,10 @@ a.pill:hover {
 	padding: 0;
 	list-style: none;
 }
+/* ein einzelner Eintrag bekommt eine Lesebreite statt der ganzen Fläche */
+.further__list:has(> li:only-child) {
+	grid-template-columns: minmax(0, 40rem);
+}
 .further__list li {
 	padding-top: 1.25rem;
 	border-top: 1px solid color-mix(in srgb, var(--band-ink) 40%, var(--band));
@@ -1075,7 +1104,10 @@ a.pill:hover {
 	transition: color 150ms;
 }
 .further__list a:hover {
-	color: var(--accent);
+	color: var(--band-hover);
+}
+.further :focus-visible {
+	outline-color: var(--band-ink);
 }
 .further__list p {
 	margin: 0 0 0.5rem;
@@ -1280,8 +1312,8 @@ a.pill:hover {
 }
 @keyframes wordmark-lighten {
 	from {
-		font-weight: 650;
-		letter-spacing: -0.035em;
+		font-weight: 700;
+		letter-spacing: -0.025em;
 	}
 	to {
 		font-weight: 380;
