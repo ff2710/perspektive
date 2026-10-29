@@ -7,7 +7,7 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<p class="meta">
+<p class="meta" data-pagefind-ignore>
 	<b>Fidel</b> · <time datetime={post.data.pubDate.toISOString().slice(0, 10)}>{formatDate(post.data.pubDate)}</time> · {
 		readingMinutes(post)
 	}&nbsp;Min. Lesezeit

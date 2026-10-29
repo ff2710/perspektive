@@ -79,6 +79,10 @@ Auf Bildschirmen ab 1200 px: dezente Striche im rechten Rand neben der Lesespalt
 
 Fußnotenzahlen und Inline-Links im Artikeltext zeigen nach 150 ms ein flaches Fenster (invertiert: `--ink` auf `--paper`, kein Schatten, kein Glas, Radius 0.375rem). Fußnoten: Text auf 4–8 Zeilen gekürzt (nach Fensterhöhe), mit „…", Fade der letzten Zeile (Maske, kein Farbverlauf) und Hinweis „Zum Weiterlesen anklicken". Externe Links: Domain fett, optionaler Titel aus dem Markdown-Link (`[Text](url "Titel")`), gekürzter Pfad. Interne Links: Beitragstitel mit Veröffentlichungsdatum in der gedämpften Nebenzeile. Nur für Maus und Stift und bei Tastaturfokus, Escape schließt, keine Netzwerkabfragen.
 
+## Suche
+
+Eigene Seite `/suche/` (in der Navigation), große Eingabezeile mit dicker Linie darunter (Archivo 650), Ergebnisse als Liste mit Haarlinien wie die Themenseiten: Titel, Auszug mit Treffer in `--mark`, Datum. Treffer werden über den statischen Pagefind-Index gefunden (nur Artikeltext, ohne Meta-Zeile, Pills und Autorenkasten). Die Seite ist `noindex`. Im Dev-Server gibt es keinen Index, dort erscheint ein kurzer Hinweis.
+
 ## Bilder
 
 Keine nötig. Wenn vorhanden: groß, randlos, ruhiger Beschnitt, Alt-Text Pflicht, Quellenzeile darunter. Ohne Bild trägt die Typo-Fläche den Aufmacher.

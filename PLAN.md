@@ -15,7 +15,7 @@ Erster Testinhalt: der Bednarz-Beitrag (Doc in Cowork, wird dort noch auf die ne
 - **Astro** (statisch) mit Content Collections, Markdown/MDX, TypeScript.
 - **Styling:** natives CSS mit Design-Tokens (CSS-Variablen). Keine UI-Library, außer `pick-ui-library` (Emil) empfiehlt sie ausdrücklich, etwa für den Editor.
 - **Fußnoten:** GFM-Fußnoten (`[^1]`) über `remark-gfm`, eigenes Rendering (Popover bei Hover/Tap, Rücksprung-Link).
-- **Suche:** Pagefind (`astro-pagefind`), läuft statisch. **RSS:** `@astrojs/rss`. **Sitemap:** `@astrojs/sitemap`.
+- **Suche:** Pagefind (direkt als `pagefind`-Paket, `npm run build` ruft es nach dem Astro-Build auf; eigene Oberfläche statt der Fertig-UI), läuft statisch. **RSS:** `@astrojs/rss`. **Sitemap:** `@astrojs/sitemap`.
 - **Schriften selbst hosten** (z. B. über Fontsource), nicht von Google-Servern laden (Datenschutz in Deutschland).
 - **Editor:** nur im Dev-Modus, Details in Phase 4.
 - **Deploy:** GitHub Actions (`withastro/action`) → GitHub Pages. Repo `fidels-perspektive` auf Fidels Account `ff2710` (bestätigt per `gh`), erreichbar unter `https://ff2710.github.io/fidels-perspektive/`. Deshalb `base: '/fidels-perspektive'` in `astro.config.mjs`; alle internen Links über `import.meta.env.BASE_URL` bauen.

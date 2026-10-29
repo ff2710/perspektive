@@ -10,7 +10,7 @@ const { tags } = Astro.props;
 
 {
 	tags.length > 0 && (
-		<ul class="pills" aria-label="Themen">
+		<ul class="pills" aria-label="Themen" data-pagefind-ignore>
 			{tags.map((tag) => (
 				<li>
 					<a class="pill" href={url(`/themen/${tagSlug(tag)}/`)}>

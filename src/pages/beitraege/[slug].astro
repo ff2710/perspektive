@@ -30,7 +30,7 @@ const { Content, headings } = await render(post);
 <BaseLayout title={post.data.title} description={post.data.description} type="article" publishedTime={post.data.pubDate} tags={post.data.tags}>
 	<div class="article-wrap">
 		<Toc headings={headings} />
-		<article class="article">
+		<article class="article" data-pagefind-body data-pagefind-meta={`date:${post.data.pubDate.toISOString().slice(0, 10)}`}>
 			<header class="article__head">
 				<h1 class="page-title">{post.data.title}</h1>
 				<p class="dek">{post.data.description}</p>
@@ -42,7 +42,7 @@ const { Content, headings } = await render(post);
 				<Content />
 			</div>
 
-			<footer class="article__foot">
+			<footer class="article__foot" data-pagefind-ignore>
 				<Pills tags={post.data.tags} />
 
 				<aside class="author" aria-label="Über den Autor">
