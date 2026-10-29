@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Impeccable-Binary (per `npx impeccable install` neu holbar)
+.claude/skills/impeccable/scripts/bin/
