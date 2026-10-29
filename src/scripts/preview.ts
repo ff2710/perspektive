@@ -18,7 +18,7 @@ tip.setAttribute('role', 'tooltip');
 tip.hidden = true;
 document.body.append(tip);
 
-let linkIndex: Record<string, string> = {};
+let linkIndex: Record<string, { title: string; date?: string }> = {};
 try {
 	linkIndex = JSON.parse(document.getElementById('link-index')?.textContent ?? '{}');
 } catch {
@@ -86,9 +86,10 @@ function describe(a: HTMLAnchorElement): Content | null {
 	}
 	if (a.pathname === location.pathname && a.hash) return null;
 	const key = a.pathname.replace(/\/?$/, '/');
-	const title = linkIndex[key];
+	const entry = linkIndex[key];
+	const note = entry ? ['Auf diesem Blog', entry.date].filter(Boolean).join(' · ') : shortPath(a.pathname);
 	return {
-		nodes: [el('p', 'preview__host', title ?? 'Fidels Perspektive'), el('p', 'preview__path', title ? 'Auf diesem Blog' : shortPath(a.pathname))],
+		nodes: [el('p', 'preview__host', entry?.title ?? 'Fidels Perspektive'), el('p', 'preview__path', note)],
 		footnote: false,
 	};
 }

@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Pills from '../../components/Pills.astro';
 import PostMeta from '../../components/PostMeta.astro';
-import { getPosts, readingMinutes } from '../../utils/posts';
+import { formatDate, getPosts, readingMinutes } from '../../utils/posts';
 import { url } from '../../utils/url';
 
 export async function getStaticPaths() {
@@ -16,11 +16,11 @@ export async function getStaticPaths() {
 
 const { post, others } = Astro.props;
 const allPosts = await getPosts();
-// Titel für die Hover-Vorschau interner Links (Schlüssel: Pfad mit Schrägstrich am Ende)
+// Titel und Datum für die Hover-Vorschau interner Links (Schlüssel: Pfad mit Schrägstrich am Ende)
 const linkIndex = Object.fromEntries([
-	...allPosts.map((p) => [url(`/beitraege/${p.id}/`), p.data.title]),
-	[url('/ueber-mich/'), 'Über mich'],
-	[url('/themen/'), 'Themen'],
+	...allPosts.map((p) => [url(`/beitraege/${p.id}/`), { title: p.data.title, date: formatDate(p.data.pubDate) }]),
+	[url('/ueber-mich/'), { title: 'Über mich' }],
+	[url('/themen/'), { title: 'Themen' }],
 ]);
 const linkIndexJson = JSON.stringify(linkIndex).replace(/</g, '\\u003c');
 const { Content } = await render(post);
