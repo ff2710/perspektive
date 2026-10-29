@@ -41,8 +41,9 @@ Quelle: Palette „Keimling und Himmel" (`#FFFEFB #D7F9F1 #9BE7FF #3A86FF #2D6A4
 | Grüner Text (Initiale, Fußnotenzahl, Pill-Schrift) | `--accent-text` | `#2D6A4F` (6,3:1) | `#A9DFC0` (12,1:1) |
 | Kontrast: Hover, Fokus, Auswahl | `--contrast` | `#1B5FC4` (6,0:1; Füllung `#3A86FF`) | `#8DB8FF` (9,0:1) |
 | Markierung / Textauswahl | `--mark` | `#9BE7FF` | `#1F4D66` |
+| „Weiterlesen"-Fläche | `--band` / `--band-ink` | `#0F1A14` / `#FFFEFB` | `#0B0B0B` / `#ECECEC` |
 
-Regeln: Grün trägt die Marke (Pills, Balken, Initiale), Blau reagiert (Hover, Fokus, Textauswahl, Fußnoten-Hover). Blau `#3A86FF` nur als Füllung, als Text immer `--contrast`. Hell und Dunkel gleichwertig. Der Dunkelmodus ist neutrales Anthrazit ohne Farbstich; nur die Akzente (Salbei, Himmelblau) bleiben farbig. Alle dunklen Textpaarungen ≥ 4,5:1 (gemessen).
+Regeln: Grün trägt die Marke (Pills, Balken, Initiale), Blau reagiert (Hover, Fokus, Textauswahl, Fußnoten-Hover). Blau `#3A86FF` nur als Füllung, als Text immer `--contrast`. Hell und Dunkel gleichwertig. Die Seite startet immer hell (auch bei dunklem System), ein Schalter in der Navigation wechselt, die Wahl liegt im localStorage. Der Dunkelmodus ist neutrales Anthrazit ohne Farbstich; nur die Akzente (Salbei, Himmelblau) bleiben farbig. Alle dunklen Textpaarungen ≥ 4,5:1 (gemessen).
 
 ## Typografie
 
@@ -61,6 +62,18 @@ Regeln: Grün trägt die Marke (Pills, Balken, Initiale), Blau reagiert (Hover, 
 - Abstände: Abschnitte 4–6rem auseinander, innerhalb 0.75–1.5rem. Mehr Raum über Überschriften als darunter.
 - Pills: Vollrunde Kapsel, `--accent-tint` mit `--accent-text`, **nie über einem Titel**.
 - Buttons/Links: Inline-Links unterstrichen (3 px in `--accent`, Hover `--contrast`), Navigation ohne Unterstreichung, Fokus-Ring 2 px `--contrast` mit Abstand.
+
+## Artikelende (Entscheidung Fidel, Variante V1 mit schwarzer „Weiterlesen"-Fläche)
+
+Vier klar getrennte Zonen, je 5 rem Abstand:
+1. **Artikeltext**, endet mit einem kleinen grünen Quadrat (`--accent-text`) am letzten Satz.
+2. **Fußnoten**: Haarlinie darüber, kleinere Schrift (0.95rem, Archivo), gedämpft (`--muted`). Die Kopfzeile „Fußnoten (n)" ist ein Button mit Pfeil und standardmäßig zugeklappt (ohne JavaScript offen).
+3. **Themen-Pills und Autorenkasten**: Nebenmaterial auf `--surface`, kleine gedämpfte Schrift.
+4. **Weiterlesen**: eigene Fläche in voller Breite, `--band` (nahezu Schwarz, im Dunkelmodus noch dunkler als der Grund), große Überschrift, Einträge in 1–3 Spalten mit Haarlinie oben.
+
+## Hover-Vorschau
+
+Fußnotenzahlen und Inline-Links im Artikeltext zeigen nach 150 ms ein flaches Fenster (invertiert: `--ink` auf `--paper`, kein Schatten, kein Glas, Radius 0.375rem). Fußnoten: Text auf 4–8 Zeilen gekürzt (nach Fensterhöhe), mit „…", Fade der letzten Zeile (Maske, kein Farbverlauf) und Hinweis „Zum Weiterlesen anklicken". Externe Links: Domain fett, optionaler Titel aus dem Markdown-Link (`[Text](url "Titel")`), gekürzter Pfad. Interne Links: Beitragstitel. Nur für Maus und Stift und bei Tastaturfokus, Escape schließt, keine Netzwerkabfragen.
 
 ## Bilder
 

@@ -16,6 +16,8 @@
 	--mark: #9be7ff;
 	--switch-track: #8a958e;
 	--switch-knob: #ffffff;
+	--band: #0f1a14;
+	--band-ink: #fffefb;
 
 	--sans: 'Archivo Variable', system-ui, sans-serif;
 	--serif: 'Source Serif 4 Variable', Georgia, serif;
@@ -41,6 +43,8 @@
 	--mark: #1f4d66;
 	--switch-track: #a9dfc0;
 	--switch-knob: #161616;
+	--band: #0b0b0b;
+	--band-ink: #ececec;
 }
 
 *,
@@ -552,6 +556,15 @@ a.pill:hover {
 	line-height: 0.8;
 	color: var(--accent-text);
 }
+.prose > p:last-of-type::after {
+	content: '';
+	display: inline-block;
+	width: 0.55em;
+	height: 0.55em;
+	margin-left: 0.35em;
+	background: var(--accent-text);
+	vertical-align: 0.05em;
+}
 .prose sup a {
 	font-family: var(--sans);
 	font-weight: 650;
@@ -563,11 +576,13 @@ a.pill:hover {
 	color: var(--contrast);
 }
 .prose .footnotes {
-	margin-top: 3rem;
+	margin-top: 5rem;
 	padding-top: 1.25rem;
 	border-top: 1px solid var(--line);
-	font-size: 1rem;
+	font-family: var(--sans);
+	font-size: 0.95rem;
 	line-height: 1.5;
+	color: var(--muted);
 }
 .prose .footnotes h2 {
 	margin: 0 0 0.75rem;
@@ -604,7 +619,7 @@ a.pill:hover {
 .footnotes--enhanced .footnotes__toggle {
 	margin-bottom: 0;
 }
-.footnotes--enhanced ol {
+.prose .footnotes--enhanced ol {
 	margin-top: 0.75rem;
 }
 @keyframes footnotes-open {
@@ -614,6 +629,15 @@ a.pill:hover {
 }
 
 @media print {
+	:root[data-theme='dark'] {
+		--paper: #fff;
+		--ink: #000;
+		--muted: #444;
+		--line: #bbb;
+		--surface: #f2f2f2;
+		--accent-text: #2d6a4f;
+		--contrast: #1b5fc4;
+	}
 	.prose .footnotes ol[hidden] {
 		display: block;
 		content-visibility: visible;
@@ -633,10 +657,8 @@ a.pill:hover {
 .article__foot {
 	display: flex;
 	flex-direction: column;
-	gap: 2.5rem;
-	margin-top: 3.5rem;
-	padding-top: 2rem;
-	border-top: 1px solid var(--line);
+	gap: 2rem;
+	margin-top: 5rem;
 }
 .author {
 	display: flex;
@@ -648,19 +670,72 @@ a.pill:hover {
 .author b {
 	font-family: var(--sans);
 	font-weight: 650;
-	font-size: 1.2rem;
+	font-size: 1.05rem;
 }
 .author p {
 	margin: 0;
-	font-size: 1.05rem;
+	font-family: var(--sans);
+	font-size: 0.95rem;
 	line-height: 1.5;
+	color: var(--muted);
 }
-.more__title {
-	margin: 0 0 0.5rem;
+.author a {
+	text-decoration-color: var(--accent);
+	text-underline-offset: 3px;
+}
+.author a:hover {
+	color: var(--contrast);
+}
+
+/* Weiterlesen: eigene Fläche in voller Breite hinter dem Artikel */
+.further {
+	padding-block: 5rem;
+	background: var(--band);
+	color: var(--band-ink);
+}
+.further__title {
+	margin: 0 0 2.5rem;
 	font-family: var(--sans);
 	font-weight: 650;
-	font-size: 1.3rem;
-	letter-spacing: -0.02em;
+	font-size: clamp(2rem, 5vw, 3.2rem);
+	letter-spacing: -0.03em;
+	line-height: 1.05;
+}
+.further__list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	gap: 3rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.further__list li {
+	padding-top: 1.25rem;
+	border-top: 1px solid color-mix(in srgb, var(--band-ink) 40%, var(--band));
+}
+.further__list h3 {
+	margin: 0 0 0.6rem;
+	font-family: var(--sans);
+	font-weight: 650;
+	font-size: 1.7rem;
+	letter-spacing: -0.025em;
+	line-height: 1.15;
+}
+.further__list a {
+	text-decoration: none;
+	transition: color 150ms;
+}
+.further__list a:hover {
+	color: var(--accent);
+}
+.further__list p {
+	margin: 0 0 0.5rem;
+	font-size: 1.1rem;
+	line-height: 1.5;
+}
+.further__list .meta {
+	font-size: 0.9rem;
+	color: color-mix(in srgb, var(--band-ink) 72%, var(--band));
 }
 
 @media (max-width: 800px) {
@@ -684,7 +759,7 @@ a.pill:hover {
 	.theme-anim *,
 	.theme-anim *::before,
 	.theme-anim *::after {
-		transition: background-color 200ms, color 200ms, border-color 200ms, text-decoration-color 200ms !important;
+		transition: background-color 200ms, color 200ms, border-color 200ms, text-decoration-color 200ms, transform 200ms ease-out !important;
 	}
 }
 

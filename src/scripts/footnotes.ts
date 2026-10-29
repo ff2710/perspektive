@@ -43,16 +43,21 @@ if (section && heading && list) {
 	}
 
 	function openIfTargeted() {
-		const id = decodeURIComponent(location.hash.slice(1));
+		let id: string;
+		try {
+			id = decodeURIComponent(location.hash.slice(1));
+		} catch {
+			return; // kaputter Hash (z. B. "#%"): einfach ignorieren
+		}
 		if (id && list!.contains(document.getElementById(id))) open();
 	}
-
-	close();
-	openIfTargeted();
 
 	button.addEventListener('click', () => (isOpen() ? close() : open()));
 	list.addEventListener('beforematch', open);
 	window.addEventListener('hashchange', openIfTargeted);
+
+	close();
+	openIfTargeted();
 
 	// Klick auf eine Fußnotenzahl im Text: Block aufklappen, der Browser springt dann zur Fußnote.
 	document.addEventListener('click', (event) => {

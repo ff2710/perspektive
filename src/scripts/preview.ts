@@ -53,7 +53,12 @@ function shortPath(path: string): string {
 }
 
 function footnoteText(a: HTMLAnchorElement): string | null {
-	const id = decodeURIComponent(a.hash.slice(1));
+	let id = '';
+	try {
+		id = decodeURIComponent(a.hash.slice(1));
+	} catch {
+		return null;
+	}
 	const item = id ? document.getElementById(id) : null;
 	if (!item) return null;
 	const copy = item.cloneNode(true) as HTMLElement;
@@ -94,6 +99,8 @@ function targetFor(node: EventTarget | null): HTMLAnchorElement | null {
 	return a && !a.hasAttribute('data-footnote-backref') ? a : null;
 }
 
+const viewportWidth = () => document.documentElement.clientWidth;
+
 function place(a: HTMLAnchorElement, at: 'pointer' | 'element') {
 	const w = tip.offsetWidth;
 	const h = tip.offsetHeight;
@@ -102,7 +109,7 @@ function place(a: HTMLAnchorElement, at: 'pointer' | 'element') {
 	if (at === 'pointer') {
 		x = pointer.x + GAP;
 		y = pointer.y + GAP;
-		if (x + w > innerWidth - MARGIN) x = pointer.x - w - GAP;
+		if (x + w > viewportWidth() - MARGIN) x = pointer.x - w - GAP;
 		if (y + h > innerHeight - MARGIN) y = pointer.y - h - GAP;
 	} else {
 		const rect = a.getBoundingClientRect();
@@ -110,14 +117,14 @@ function place(a: HTMLAnchorElement, at: 'pointer' | 'element') {
 		y = rect.bottom + 8;
 		if (y + h > innerHeight - MARGIN) y = rect.top - h - 8;
 	}
-	tip.style.left = `${clamp(x, MARGIN, innerWidth - w - MARGIN)}px`;
+	tip.style.left = `${clamp(x, MARGIN, viewportWidth() - w - MARGIN)}px`;
 	tip.style.top = `${clamp(y, MARGIN, innerHeight - h - MARGIN)}px`;
 }
 
 function show(a: HTMLAnchorElement, at: 'pointer' | 'element') {
 	const content = describe(a);
-	if (!content) return;
 	if (current) hide();
+	if (!content) return;
 	tip.replaceChildren(...content.nodes);
 	tip.classList.toggle('is-footnote', content.footnote);
 	tip.classList.remove('is-clipped', 'is-visible');
@@ -163,6 +170,7 @@ document.addEventListener('pointerover', (event) => {
 	if (tip.contains(event.target as Node)) return;
 	const a = targetFor(event.target);
 	if (!a) return;
+	pointer = { x: event.clientX, y: event.clientY };
 	clearTimeout(hideTimer);
 	if (a === current) return;
 	clearTimeout(showTimer);

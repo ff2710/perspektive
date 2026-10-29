@@ -104,6 +104,8 @@ const Wordmark = home ? 'h1' : 'p';
 			<slot />
 		</main>
 
+		<slot name="after" />
+
 		<footer class="footer">
 			<div class="wrap footer__row">
 				<span><span class="footer__name">{siteTitle}</span> · © {new Date().getFullYear()} Fidel</span>

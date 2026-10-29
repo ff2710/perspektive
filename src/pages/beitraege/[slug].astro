@@ -48,28 +48,31 @@ const { Content } = await render(post);
 				<p><a href={url('/ueber-mich/')}>Mehr über mich</a></p>
 			</aside>
 
-			{
-				others.length > 0 && (
-					<section aria-labelledby="weiterlesen">
-						<h2 class="more__title" id="weiterlesen">
-							Weiterlesen
-						</h2>
-						<ul class="post-list">
-							{others.map((other) => (
-								<li class="post-list__item">
-									<h3 class="post-list__title">
-										<a href={url(`/beitraege/${other.id}/`)}>{other.data.title}</a>
-									</h3>
-									<p class="post-list__teaser">{other.data.description}</p>
-									<p class="meta">{readingMinutes(other)}&nbsp;Min. Lesezeit</p>
-								</li>
-							))}
-						</ul>
-					</section>
-				)
-			}
 		</footer>
 	</article>
+
+	{
+		others.length > 0 && (
+			<section class="further" slot="after" aria-labelledby="weiterlesen">
+				<div class="wrap">
+					<h2 class="further__title" id="weiterlesen">
+						Weiterlesen
+					</h2>
+					<ul class="further__list">
+						{others.map((other) => (
+							<li>
+								<h3>
+									<a href={url(`/beitraege/${other.id}/`)}>{other.data.title}</a>
+								</h3>
+								<p>{other.data.description}</p>
+								<p class="meta">{readingMinutes(other)}&nbsp;Min. Lesezeit</p>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+		)
+	}
 	<script type="application/json" id="link-index" set:html={linkIndexJson} />
 	<script>
 		import '../../scripts/preview.ts';
