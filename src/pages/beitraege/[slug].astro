@@ -27,7 +27,7 @@ const linkIndexJson = JSON.stringify(linkIndex).replace(/</g, '\\u003c');
 const { Content, headings } = await render(post);
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} type="article" publishedTime={post.data.pubDate} tags={post.data.tags}>
+<BaseLayout title={post.data.title} description={post.data.description} italic type="article" publishedTime={post.data.pubDate} tags={post.data.tags}>
 	<div class="progress" aria-hidden="true"></div>
 	<div class="article-wrap">
 		<Toc headings={headings} />

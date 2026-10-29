@@ -3,6 +3,10 @@ import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/source-serif-4';
 import '@fontsource-variable/source-serif-4/wght-italic.css';
 import '../styles/global.css';
+// Schriften vorab laden: sonst tauscht der Browser die Ersatzschrift erst nach dem ersten Bild aus, und Text springt (Layout-Verschiebung).
+import archivoFont from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import serifFont from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
+import serifItalicFont from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-italic.woff2?url';
 import { url } from '../utils/url';
 
 interface Props {
@@ -17,12 +21,14 @@ interface Props {
 	noindex?: boolean;
 	/** Suchleiste im Kopf anzeigen (auf der Suchseite selbst nicht). */
 	search?: boolean;
+	/** Kursive Schrift vorab laden (Seiten mit kursiver Einleitung oder Teaser). */
+	italic?: boolean;
 }
 
 const siteTitle = 'Fidels Perspektive';
 const siteDescription =
 	'Ich bin Fidel, Politikwissenschaftsstudent, und teile hier meine Perspektive zu aktuellen politischen Themen.';
-const { title, description = siteDescription, home = false, type = 'website', publishedTime, tags = [], noindex = false, search = true } = Astro.props;
+const { title, description = siteDescription, home = false, type = 'website', publishedTime, tags = [], noindex = false, search = true, italic = false } = Astro.props;
 const pageTitle = title ? `${title} · ${siteTitle}` : siteTitle;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 // Vorschaubild für geteilte Links (1200×630), liegt in public/
@@ -43,6 +49,9 @@ const Wordmark = home ? 'h1' : 'p';
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<link rel="preload" as="font" type="font/woff2" href={archivoFont} crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href={serifFont} crossorigin />
+		{italic && <link rel="preload" as="font" type="font/woff2" href={serifItalicFont} crossorigin />}
 		<meta name="author" content="Fidel" />
 		<meta name="theme-color" content="#fffefb" />
 		{noindex && <meta name="robots" content="noindex" />}

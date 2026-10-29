@@ -793,6 +793,8 @@ a.pill:hover {
 	display: flex;
 	align-items: center;
 	gap: 0.75rem;
+	min-width: 1.6rem; /* Zielgröße mindestens 24 px */
+	min-height: 1.6rem;
 	padding-block: 0.3rem;
 	font-family: var(--sans);
 	font-size: 0.9rem;
@@ -940,20 +942,19 @@ a.pill:hover {
 	text-decoration: none;
 	color: var(--contrast);
 }
-/* unsichtbare, größere Trefferfläche (Finger und Zeiger treffen die kleine Zahl leichter) */
-.prose sup a::after {
-	content: '';
-	position: absolute;
-	inset: -0.95rem -1.2rem;
+/* größere Trefferfläche nur für Finger: mit der Maus würde sie Nachbarwörter und -links überdecken */
+@media (pointer: coarse) {
+	.prose sup a::after {
+		content: '';
+		position: absolute;
+		inset: -0.5rem -0.6rem;
+	}
 }
 .prose a[data-footnote-backref] {
 	display: inline-block;
 	padding: 0.3rem 0.5rem;
 	margin: -0.3rem -0.2rem;
 	text-decoration: none;
-	color: var(--contrast);
-}
-.prose sup a:hover {
 	color: var(--contrast);
 }
 .prose .footnotes {
@@ -1509,7 +1510,9 @@ a.pill:hover {
 	inset: auto 0 0 0;
 	z-index: 60;
 	max-height: 60vh;
+	max-height: 60dvh;
 	overflow-y: auto;
+	overscroll-behavior: contain;
 	padding: 1.1rem var(--gutter) calc(1rem + env(safe-area-inset-bottom, 0px));
 	border-radius: 1rem 1rem 0 0;
 	background: var(--ink);
@@ -1576,6 +1579,7 @@ a.pill:hover {
 .prose .footnotes li:target,
 .prose sup a:target {
 	background: var(--mark);
+	color: var(--ink);
 	box-decoration-break: clone;
 }
 
