@@ -15,6 +15,14 @@ export async function getStaticPaths() {
 }
 
 const { post, others } = Astro.props;
+const allPosts = await getPosts();
+// Titel für die Hover-Vorschau interner Links (Schlüssel: Pfad mit Schrägstrich am Ende)
+const linkIndex = Object.fromEntries([
+	...allPosts.map((p) => [url(`/beitraege/${p.id}/`), p.data.title]),
+	[url('/ueber-mich/'), 'Über mich'],
+	[url('/themen/'), 'Themen'],
+]);
+const linkIndexJson = JSON.stringify(linkIndex).replace(/</g, '\\u003c');
 const { Content } = await render(post);
 ---
 
@@ -62,4 +70,8 @@ const { Content } = await render(post);
 			}
 		</footer>
 	</article>
+	<script type="application/json" id="link-index" set:html={linkIndexJson} />
+	<script>
+		import '../../scripts/preview.ts';
+	</script>
 </BaseLayout>
