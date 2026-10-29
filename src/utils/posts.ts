@@ -7,6 +7,11 @@ const dateFormat = new Intl.DateTimeFormat('de-DE', { dateStyle: 'long', timeZon
 
 export const formatDate = (date: Date) => dateFormat.format(date);
 
+const shortDateFormat = new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium', timeZone: 'UTC' });
+
+/** Kurzes Datum für enge Stellen, z. B. „22.10.2026“. */
+export const formatShortDate = (date: Date) => shortDateFormat.format(date);
+
 /** Alle veröffentlichten Beiträge, neueste zuerst. */
 export async function getPosts(): Promise<Post[]> {
 	const posts = await getCollection('posts', ({ data }) => !data.draft);

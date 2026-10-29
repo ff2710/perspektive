@@ -105,5 +105,7 @@ if (form && input && status && list) {
 	if (initial) {
 		input.value = initial;
 		search();
+	} else if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+		input.focus(); // auf Touch-Geräten nicht: die Tastatur würde die Treffer verdecken
 	}
 }

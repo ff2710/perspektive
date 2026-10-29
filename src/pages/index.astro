@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Pills from '../components/Pills.astro';
 import PostMeta from '../components/PostMeta.astro';
-import { collectTags, getPosts, readingMinutes } from '../utils/posts';
+import { collectTags, formatShortDate, getPosts, readingMinutes } from '../utils/posts';
 import { url } from '../utils/url';
 
 const posts = await getPosts();
@@ -50,7 +50,7 @@ const tags = collectTags(posts);
 									<li class="latest__item">
 										<a href={url(`/beitraege/${post.id}/`)}>{post.data.title}</a>
 										<span class="meta">
-											<b>Fidel</b> · {readingMinutes(post)}&nbsp;Min.
+											<b>Fidel</b> · <time datetime={post.data.pubDate.toISOString().slice(0, 10)}>{formatShortDate(post.data.pubDate)}</time> · {readingMinutes(post)}&nbsp;Min. Lesezeit
 										</span>
 									</li>
 								))}

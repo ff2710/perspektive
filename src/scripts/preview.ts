@@ -232,3 +232,75 @@ window.addEventListener(
 	},
 	{ passive: true },
 );
+
+// --- Touch: Fußnote als Fenster am unteren Rand (es gibt dort kein Hover) --------------------------------------
+// Tipp auf die Zahl zeigt den Text und bietet "Zur Fußnote springen"; so verliert man die Stelle nicht blind.
+const sheet = document.createElement('div');
+sheet.className = 'sheet';
+sheet.hidden = true;
+sheet.tabIndex = -1;
+sheet.setAttribute('role', 'dialog');
+sheet.setAttribute('aria-label', 'Fußnote');
+document.body.append(sheet);
+
+let sheetOrigin: HTMLElement | null = null;
+let lastPointerType = 'mouse';
+
+function closeSheet(restoreFocus = true) {
+	if (sheet.hidden) return;
+	sheet.classList.remove('is-open');
+	sheet.hidden = true;
+	if (restoreFocus) sheetOrigin?.focus({ preventScroll: true });
+	sheetOrigin = null;
+}
+
+function openSheet(a: HTMLAnchorElement, text: string) {
+	hide();
+	const jump = document.createElement('a');
+	jump.className = 'sheet__jump';
+	jump.href = a.hash;
+	jump.textContent = 'Zur Fußnote springen';
+	jump.addEventListener('click', () => closeSheet(false));
+
+	const close = document.createElement('button');
+	close.type = 'button';
+	close.textContent = 'Schließen';
+	close.addEventListener('click', () => closeSheet());
+
+	const actions = document.createElement('div');
+	actions.className = 'sheet__actions';
+	actions.append(jump, close);
+
+	sheet.replaceChildren(el('p', 'sheet__label', `Fußnote ${a.textContent}`), el('p', 'sheet__text', text), actions);
+	sheetOrigin = a;
+	sheet.hidden = false;
+	sheet.focus({ preventScroll: true });
+	requestAnimationFrame(() => sheet.classList.add('is-open'));
+}
+
+document.addEventListener(
+	'pointerdown',
+	(event) => {
+		lastPointerType = event.pointerType;
+		if (!sheet.hidden && !sheet.contains(event.target as Node)) closeSheet(false);
+	},
+	true,
+);
+
+document.addEventListener(
+	'click',
+	(event) => {
+		const a = targetFor(event.target);
+		// event.detail === 0: per Tastatur ausgelöst, dort bleibt das normale Springen
+		if (!a || !a.hasAttribute('data-footnote-ref') || lastPointerType !== 'touch' || event.detail === 0) return;
+		const text = footnoteText(a);
+		if (!text) return;
+		event.preventDefault();
+		openSheet(a, text);
+	},
+	true,
+);
+
+document.addEventListener('keydown', (event) => {
+	if (event.key === 'Escape') closeSheet();
+});
