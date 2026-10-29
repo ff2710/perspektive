@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { url } from '../utils/url';
 ---
 
-<BaseLayout title="Suche" description="Volltextsuche in allen Beiträgen von Fidels Perspektive." noindex>
+<BaseLayout title="Suche" description="Volltextsuche in allen Beiträgen von Fidels Perspektive." noindex search={false}>
 	<h1 class="page-title">Suche</h1>
 
 	<form class="search" role="search" data-search data-pagefind={url('/pagefind/pagefind.js')}>

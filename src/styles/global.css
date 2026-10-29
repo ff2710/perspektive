@@ -130,9 +130,30 @@ img {
 .masthead__row {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: baseline;
-	justify-content: space-between;
+	align-items: center;
 	gap: 0.75rem 1.5rem;
+}
+.masthead__row .wordmark {
+	margin-right: auto;
+}
+.nav {
+	order: 1;
+}
+.masthead__tools {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	order: 2;
+}
+/* Startseite: der große Schriftzug steht links, Suche und Schalter oben rechts, die Links in einer Zeile darunter. */
+.is-home .masthead__tools {
+	order: 1;
+	align-self: flex-start;
+	margin-top: 0.5rem;
+}
+.is-home .nav {
+	order: 2;
+	flex-basis: 100%;
 }
 .wordmark {
 	margin: 0;
@@ -156,18 +177,177 @@ img {
 	font-weight: 600;
 	font-size: 0.95rem;
 }
-.nav a {
+.nav > a {
 	text-decoration: none;
 	padding-block: 0.25rem;
 	border-bottom: 2px solid transparent;
 	transition: color 150ms, border-color 150ms;
 }
-.nav a:hover {
+.nav > a:hover {
 	color: var(--contrast);
 }
-.nav a[aria-current] {
+.nav > a[aria-current] {
 	border-bottom-color: var(--accent);
 }
+/* Suchleiste im Kopf: tippen zeigt sofort Treffer (angelehnt an ein Uiverse-Beispiel, auf die Seite angepasst) */
+.search-box {
+	position: relative;
+	display: flex;
+	flex: none;
+	align-items: center;
+	align-self: center;
+	width: 13rem;
+}
+.search-box__icon {
+	position: absolute;
+	left: 0.9rem;
+	width: 1rem;
+	height: 1rem;
+	fill: var(--muted);
+	pointer-events: none;
+	transition: fill 240ms var(--ease-out);
+}
+.search-box__input {
+	width: 100%;
+	height: 2.2rem;
+	padding: 0 2.2rem 0 2.4rem;
+	border: 1px solid transparent;
+	border-radius: 99px;
+	background: var(--surface);
+	color: var(--ink);
+	font-family: var(--sans);
+	font-size: 0.9rem;
+	-webkit-appearance: none;
+	appearance: none;
+	transition: border-color 240ms var(--ease-out), background-color 240ms var(--ease-out), outline-color 240ms var(--ease-out);
+}
+.search-box__input::placeholder {
+	color: var(--muted);
+}
+.search-box__input::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+}
+.search-box__input:hover,
+.search-box__input:focus {
+	border-color: var(--accent-text);
+	background: var(--paper);
+}
+.search-box__input:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent);
+	outline-offset: 0;
+}
+.search-box:focus-within .search-box__icon,
+.search-box__input:hover + .search-box__kbd {
+	fill: var(--accent-text);
+}
+.search-box__kbd {
+	position: absolute;
+	right: 0.8rem;
+	padding: 0 0.4rem;
+	border: 1px solid var(--line);
+	border-radius: 0.3rem;
+	font-family: var(--sans);
+	font-size: 0.75rem;
+	line-height: 1.4;
+	color: var(--muted);
+	pointer-events: none;
+}
+.search-box__input:focus ~ .search-box__kbd,
+.search-box__input:not(:placeholder-shown) ~ .search-box__kbd {
+	display: none;
+}
+.search-box__results {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	right: 0;
+	z-index: 30;
+	width: 22rem;
+	max-width: calc(100vw - 2 * var(--gutter));
+	margin: 0;
+	padding: 0.35rem;
+	list-style: none;
+	border: 1px solid var(--ink);
+	border-radius: 0.9rem;
+	background: var(--paper);
+	transform-origin: top right;
+}
+.search-box__results[hidden] {
+	display: none;
+}
+.search-box__results a {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1rem;
+	padding: 0.55rem 0.75rem;
+	border-radius: 0.6rem;
+	font-family: var(--sans);
+	text-decoration: none;
+	transition: background-color 120ms;
+}
+.search-box__results a[aria-selected='true'] {
+	background: var(--accent-tint);
+}
+.search-box__title {
+	font-weight: 650;
+	font-size: 0.95rem;
+	line-height: 1.3;
+}
+.search-box__meta {
+	font-size: 0.8rem;
+	color: var(--muted);
+}
+.search-box__results a.search-box__all {
+	flex-direction: row;
+	font-weight: 600;
+	font-size: 0.85rem;
+	color: var(--accent-text);
+}
+.search-box__message {
+	margin: 0;
+	padding: 0.6rem 0.75rem;
+	font-family: var(--sans);
+	font-size: 0.9rem;
+	color: var(--muted);
+}
+
+@media (max-width: 700px) {
+	/* Auf schmalen Bildschirmen: Links, darunter eine Zeile mit Suchfeld und Schalter. */
+	.is-home .nav {
+		order: 1;
+		flex-basis: auto;
+	}
+	.masthead__tools,
+	.is-home .masthead__tools {
+		order: 2;
+		flex: 1 1 100%;
+		align-self: center;
+		margin-top: 0;
+	}
+	.search-box {
+		flex: 1 1 auto;
+		width: auto;
+	}
+	.search-box__input {
+		font-size: 1rem;
+	}
+	.search-box__results {
+		right: auto;
+		left: 0;
+		transform-origin: top left;
+	}
+}
+@media (prefers-reduced-motion: no-preference) {
+	.search-box__results:not([hidden]) {
+		animation: results-in 140ms var(--ease-out);
+	}
+}
+@keyframes results-in {
+	from {
+		opacity: 0;
+		transform: translateY(-4px) scale(0.98);
+	}
+}
+
 /* Theme-Schalter: Kapsel mit Sonne und Mond, ein Knopf gleitet unter das aktive Symbol */
 .theme-switch {
 	position: relative;
@@ -1060,9 +1240,9 @@ a.pill:hover {
 
 	/* Blöcke unter dem Text blenden weich ein, sobald sie ins Bild kommen (nie der Fließtext selbst). */
 	@supports (animation-timeline: view()) {
-		/* Kurze Überschriften "setzen sich": erst weit gesetzt und dünn, dann fest und kräftig. */
-		.section-title,
-		.further__title {
+		/* Kurze Überschriften der Startseite "setzen sich": erst weit gesetzt und dünn, dann fest und kräftig.
+		   Nur dort: Gewicht und Laufweite berechnen den Text neu, auf Lese-Seiten soll das Scrollen unberührt bleiben. */
+		.is-home .section-title {
 			white-space: nowrap;
 			animation: settle linear both;
 			animation-timeline: view();
@@ -1117,6 +1297,143 @@ a.pill:hover {
 	transform: scaleX(0);
 	transform-origin: left;
 	pointer-events: none;
+}
+
+/* Startseite: Eingangs-Choreografie (einmal beim Laden, unter einer Sekunde, danach Ruhe) */
+.word {
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: top;
+	padding: 0.08em 0.02em 0.16em;
+	margin: -0.08em -0.02em -0.16em;
+}
+.word__inner {
+	display: inline-block;
+}
+.feature__words {
+	display: inline-block;
+}
+.ch {
+	display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.is-home .ch {
+		animation: letter-in 650ms var(--ease-out) both;
+		animation-delay: calc(var(--i) * 26ms);
+	}
+	.is-home .masthead__tools {
+		animation: rise-in 550ms var(--ease-out) 420ms both;
+	}
+	.is-home .nav {
+		animation: rise-in 550ms var(--ease-out) 460ms both;
+	}
+	.is-home .tagline {
+		animation: rise-in 600ms var(--ease-out) 500ms both;
+	}
+	.feature {
+		animation: panel-in 800ms var(--ease-out) 200ms both;
+	}
+	.word__inner {
+		animation: word-up 700ms var(--ease-out) both;
+		animation-delay: calc(420ms + var(--i) * 70ms);
+	}
+	.feature__teaser {
+		animation: rise-in 550ms var(--ease-out) 800ms both;
+	}
+	.feature .meta {
+		animation: rise-in 550ms var(--ease-out) 860ms both;
+	}
+	.feature .pills {
+		animation: rise-in 550ms var(--ease-out) 920ms both;
+	}
+	.latest__item {
+		animation: rise-in 550ms var(--ease-out) both;
+	}
+	.latest__item:nth-child(1) {
+		animation-delay: 650ms;
+	}
+	.latest__item:nth-child(2) {
+		animation-delay: 730ms;
+	}
+	.latest__item:nth-child(3) {
+		animation-delay: 810ms;
+	}
+	.latest__item:nth-child(n + 4) {
+		animation-delay: 890ms;
+	}
+
+	/* Beim Weiterscrollen driftet der Titel des Aufmachers ein Stück nach oben (Tiefe). */
+	@supports (animation-timeline: view()) {
+		.feature__words {
+			animation: drift linear both;
+			animation-timeline: view();
+			animation-range: exit 0% exit 100%;
+		}
+	}
+}
+@keyframes letter-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.45em);
+	}
+}
+@keyframes rise-in {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+}
+@keyframes panel-in {
+	from {
+		clip-path: inset(0 100% 0 0);
+	}
+}
+@keyframes word-up {
+	from {
+		transform: translateY(105%);
+	}
+}
+@keyframes drift {
+	to {
+		transform: translateY(-28px);
+	}
+}
+
+/* Hover-Details auf der Startseite (nur Geräte mit Maus) */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+	.topics__list a {
+		position: relative;
+	}
+	.topics__list a::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -1px;
+		height: 2px;
+		background: var(--accent-text);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 360ms var(--ease-out);
+	}
+	.topics__list a:hover::after,
+	.topics__list a:focus-visible::after {
+		transform: scaleX(1);
+	}
+	.topics__list small {
+		transition: transform 260ms var(--ease-out);
+	}
+	.topics__list a:hover small {
+		transform: translateX(-6px);
+	}
+	.latest__item a {
+		display: inline-block;
+		transition: transform 240ms var(--ease-out), color 150ms;
+	}
+	.latest__item a:hover {
+		transform: translateX(6px);
+	}
 }
 
 /* Aufmacher unter der Maus: der grüne Balken wächst ein Stück (nur Geräte mit Maus). */

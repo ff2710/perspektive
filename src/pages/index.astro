@@ -7,6 +7,7 @@ import { url } from '../utils/url';
 
 const posts = await getPosts();
 const [featured, ...rest] = posts;
+const words = featured?.data.title.split(' ') ?? [];
 const latest = rest.slice(0, 5);
 const tags = collectTags(posts);
 ---
@@ -18,7 +19,21 @@ const tags = collectTags(posts);
 				<div class="home">
 					<article class="feature">
 						<h2 class="feature__title">
-							<a href={url(`/beitraege/${featured.id}/`)}>{featured.data.title}</a>
+							<a href={url(`/beitraege/${featured.id}/`)}>
+								<span class="visually-hidden">{featured.data.title}</span>
+								<span class="feature__words" aria-hidden="true">
+									{words.map((word, i) => (
+										<>
+											<span class="word">
+												<span class="word__inner" style={`--i:${i}`}>
+													{word}
+												</span>
+											</span>
+											{i < words.length - 1 ? ' ' : ''}
+										</>
+									))}
+								</span>
+							</a>
 						</h2>
 						<p class="feature__teaser">{featured.data.description}</p>
 						<PostMeta post={featured} />

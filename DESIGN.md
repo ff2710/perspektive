@@ -104,4 +104,7 @@ Phase 5 (Emil). Kurz und kontrolliert, nichts, was vom Lesen ablenkt, keine Daue
 - **Lesefortschritt:** dünne Linie in `--accent-text` am oberen Rand der Beitragsseiten, wächst mit dem Scrollen (`scaleX`).
 - **Link-Highlight:** Beim Hover oder Tastaturfokus fährt ein Textmarker (`--mark`, einfarbig) von links unter Links im Fließtext, 240 ms.
 - **Theme-Schalter:** Kapsel mit Sonne und Mond, ein Salbei-Knopf gleitet unter das aktive Symbol (260 ms), das aktive Symbol ist dunkel, das andere gedämpft und leicht gedreht.
+- **Startseite, Eingangs-Choreografie (einmal beim Laden, etwa 1,5 s):** Der Schriftzug erscheint Buchstabe für Buchstabe (steigt 0.45em auf, 26 ms Versatz), Suche, Schalter, Links und Beschreibung steigen danach auf, der Aufmacher wischt von links auf, sein Titel steigt Wort für Wort aus einer Maske (70 ms Versatz), Teaser, Meta-Zeile, Pills und die Liste „Zuletzt“ folgen gestaffelt. Beim Weiterscrollen driftet der Titel des Aufmachers 28 px nach oben.
+- **Hover auf der Startseite (nur Maus):** Themen-Zeilen ziehen eine grüne Linie von links und schieben die Zahl ein Stück ein, Einträge in „Zuletzt“ rücken 6 px nach rechts.
+- **Suchleiste im Kopf:** Pillenform wie der Schalter, Lupe links, Taste `/` springt hinein, Treffer erscheinen beim Tippen (bis zu 5, mit Datum), Pfeiltasten und Enter, Escape schließt.
 - **Hero-Zoom:** erst mit dem ersten Foto.

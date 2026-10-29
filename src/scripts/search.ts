@@ -3,8 +3,7 @@
  * Der Index entsteht erst beim Build (`npm run build` ruft pagefind auf), im Dev-Server gibt es ihn nicht.
  */
 
-type PagefindData = { url: string; excerpt: string; meta: { title?: string; date?: string } };
-type Pagefind = { search(query: string): Promise<{ results: { data(): Promise<PagefindData> }[] }> };
+import { loadPagefind, type Pagefind, type PagefindData } from './pagefind';
 
 const form = document.querySelector<HTMLFormElement>('[data-search]');
 const input = form?.querySelector<HTMLInputElement>('input');
@@ -15,21 +14,8 @@ const MAX_RESULTS = 20;
 const dateFormat = new Intl.DateTimeFormat('de-DE', { dateStyle: 'long', timeZone: 'UTC' });
 
 if (form && input && status && list) {
-	let pagefind: Pagefind | null = null;
-	let unavailable = false;
 	let run = 0;
 	let timer = 0;
-
-	async function load(): Promise<Pagefind | null> {
-		if (pagefind || unavailable) return pagefind;
-		try {
-			pagefind = (await import(/* @vite-ignore */ form!.dataset.pagefind!)) as Pagefind;
-		} catch {
-			// Im Dev-Server gibt es den Index nie; live kann ein Netzfehler später wieder klappen.
-			unavailable = import.meta.env.DEV;
-		}
-		return pagefind;
-	}
 
 	function render(data: PagefindData[]) {
 		list!.replaceChildren(
@@ -78,7 +64,7 @@ if (form && input && status && list) {
 			return;
 		}
 
-		const engine = await load();
+		const engine = await loadPagefind(form!.dataset.pagefind!);
 		if (current !== run) return; // inzwischen wurde etwas Neueres getippt
 		if (!engine) {
 			status!.textContent = import.meta.env.DEV
