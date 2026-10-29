@@ -73,7 +73,7 @@ Vier klar getrennte Zonen, je 5 rem Abstand:
 
 ## Inhaltsverzeichnis
 
-Auf Bildschirmen ab 1000 px: dezente Striche im rechten Rand neben der Lesespalte (h2 lang, h3 kurz und eingerückt), mitlaufend (`position: sticky`). Der Abschnitt, in dem man liest, hat einen dickeren grünen Strich und fetten Titel (`aria-current="location"`). Bei Hover oder Tastaturfokus erscheinen die Titel. Erst ab drei Einträgen, unter 1000 px ausgeblendet.
+Auf Bildschirmen ab 1200 px: dezente Striche im rechten Rand neben der Lesespalte (h2 lang, h3 kurz und eingerückt), mitlaufend (`position: sticky`). Der Abschnitt, in dem man liest, hat einen dickeren grünen Strich und fetten Titel (`aria-current="location"`). Bei Hover oder Tastaturfokus erscheinen die Titel. Erst ab drei Einträgen, unter 1200 px ausgeblendet (zu wenig Rand). Der Text der Einträge bleibt für Screenreader immer vorhanden.
 
 ## Hover-Vorschau
 
