@@ -3,7 +3,7 @@ title: Wann ist ein Argument ein Beleg?
 description: Ein Platzhalterbeitrag darüber, wie sich Befund und Meinung in einem Text sauber trennen lassen.
 pubDate: 2026-10-29
 tags: [Methodik, Wissenschaft]
-draft: false
+draft: true
 ---
 
 Dies ist ein Platzhalter für den Anfang eines Beitrags. Er zeigt, wie Fließtext in der gewählten Serif aussieht, wie lang eine Zeile wird und wie sich ein Absatz anfühlt, wenn man ihn am Stück liest. Der echte Beitrag kommt später.
