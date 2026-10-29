@@ -73,7 +73,7 @@ Vier klar getrennte Zonen, je 5 rem Abstand:
 
 ## Inhaltsverzeichnis
 
-Auf Bildschirmen ab 1200 px: dezente Striche im rechten Rand neben der Lesespalte (h2 lang, h3 kurz und eingerückt), mitlaufend (`position: sticky`). Der Abschnitt, in dem man liest, hat einen dickeren grünen Strich und fetten Titel (`aria-current="location"`). Bei Hover oder Tastaturfokus erscheinen die Titel. Erst ab drei Einträgen, unter 1200 px ausgeblendet (zu wenig Rand). Der Text der Einträge bleibt für Screenreader immer vorhanden.
+Auf Bildschirmen ab 1200 px: dezente Striche im rechten Rand neben der Lesespalte (h2 lang, h3 kurz und eingerückt), mitlaufend (`position: sticky`). Der Abschnitt, in dem man liest, hat einen dickeren grünen Strich und dunklen Titel (`aria-current="location"`), ohne Übergang (Übergänge dort kosteten beim Scrollen gemessen Bilder). Bei Hover oder Tastaturfokus erscheinen die Titel. Erst ab drei Einträgen, unter 1200 px ausgeblendet (zu wenig Rand). Der Text der Einträge bleibt für Screenreader immer vorhanden.
 
 ## Hover-Vorschau
 
@@ -98,10 +98,11 @@ Phase 5 (Emil). Kurz und kontrolliert, nichts, was vom Lesen ablenkt, keine Daue
 - **Seitenwechsel:** Überblendung 150 ms, nativ per `@view-transition` (kein Router).
 - **Druck-Feedback:** Pills, Schalter, Fußnoten-Button `scale(0.97)`, 120 ms.
 - **Aufmacher mit Maus:** grüner Balken wächst per `scaleX(1.5)`, 220 ms.
-- **Einblenden beim Scrollen:** nur auf der Startseite (Themen-Liste), `opacity` und 10 px Verschiebung. **Beitragsseiten haben keinerlei scroll-gekoppelte Effekte**, damit das Scrollen mit dem Mausrad ungestört flüssig bleibt (Fließtext, Fortschrittslinie und Einblenden unter dem Text wurden deshalb entfernt).
+- **Einblenden beim Scrollen:** nur Blöcke unter dem Text (Themen-Liste, Autorenkasten, „Weiterlesen“), `opacity` und 10 px Verschiebung, nie der Fließtext.
+- **Lesefortschritt:** dünne Linie in `--accent-text` am oberen Rand der Beitragsseiten, wächst mit dem Scrollen (`scaleX`). Beides läuft nur mit `transform` und `opacity`.
 - **Vorschau-Fenster:** 140 ms, wächst von der Seite des Auslösers aus `scale(0.97)`, Ausblenden sofort.
 - **Schrift beim Scrollen:** Der große Schriftzug der Startseite wird in den ersten 320 px leichter und enger (`font-weight` 650 → 380). Kurze Überschriften („Zuletzt“, „Themen“, „Weiterlesen“) setzen sich beim Einblenden: erst weit und dünn, dann fest und kräftig. Nur einzeilige Texte (kein Umbruch, kein Springen).
-- **Link-Highlight:** Beim Hover oder Tastaturfokus fährt ein Textmarker (`--mark`, einfarbig) von links unter Links im Fließtext, 240 ms.
+- **Links im Text:** Beim Hover wechseln Schrift und Unterstreichung die Farbe (Himmelblau, 150 ms), kein Hintergrund-Marker.
 - **Theme-Schalter:** Kapsel mit Sonne und Mond, ein Salbei-Knopf gleitet unter das aktive Symbol (260 ms), das aktive Symbol ist dunkel, das andere gedämpft und leicht gedreht.
 - **Startseite, Eingangs-Choreografie (einmal beim Laden, dezent, etwa 1 s):** Schriftzug, Suche, Links und Beschreibung steigen 6 px auf und blenden ein, der Aufmacher blendet ein, sein Titel steigt Wort für Wort aus einer Maske (45 ms Versatz), danach Teaser, Meta-Zeile, Pills und die Liste „Zuletzt“ (6 px, 60 ms Versatz). Beim Weiterscrollen driftet der Titel des Aufmachers 20 px nach oben.
 - **Hover auf der Startseite (nur Maus):** Themen-Zeilen ziehen eine grüne Linie von links und schieben die Zahl ein Stück ein, Einträge in „Zuletzt“ rücken 6 px nach rechts.
