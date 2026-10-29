@@ -1,7 +1,7 @@
 /* Design-Tokens und Grundstile. Verbindlich: DESIGN.md */
 
 :root {
-	color-scheme: light dark;
+	color-scheme: light;
 
 	--paper: #fffefb;
 	--ink: #0f1a14;
@@ -14,6 +14,8 @@
 	--accent-text: #2d6a4f;
 	--contrast: #1b5fc4;
 	--mark: #9be7ff;
+	--switch-track: #8a958e;
+	--switch-knob: #ffffff;
 
 	--sans: 'Archivo Variable', system-ui, sans-serif;
 	--serif: 'Source Serif 4 Variable', Georgia, serif;
@@ -23,19 +25,22 @@
 	--measure: 680px;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--paper: #161616;
-		--ink: #ececec;
-		--muted: #a8a8a8;
-		--line: #404040;
-		--surface: #212121;
-		--feature: #353535;
-		--accent-tint: #25382c;
-		--accent-text: #a9dfc0;
-		--contrast: #8db8ff;
-		--mark: #1f4d66;
-	}
+/* Dunkelmodus: nur über data-theme="dark" (Standard ist immer Hell, Wahl im localStorage) */
+:root[data-theme='dark'] {
+	color-scheme: dark;
+
+	--paper: #161616;
+	--ink: #ececec;
+	--muted: #a8a8a8;
+	--line: #404040;
+	--surface: #212121;
+	--feature: #353535;
+	--accent-tint: #25382c;
+	--accent-text: #a9dfc0;
+	--contrast: #8db8ff;
+	--mark: #1f4d66;
+	--switch-track: #a9dfc0;
+	--switch-knob: #161616;
 }
 
 *,
@@ -154,6 +159,37 @@ img {
 .nav a[aria-current] {
 	border-bottom-color: var(--accent);
 }
+/* Theme-Schalter (Apple-Stil): Track mit rundem Knopf, ohne Icon */
+.theme-switch {
+	position: relative;
+	flex: none;
+	align-self: center;
+	width: 2.6rem;
+	height: 1.55rem;
+	padding: 0;
+	border: 0;
+	border-radius: 99px;
+	background: var(--switch-track);
+	cursor: pointer;
+	transition: background-color 200ms;
+}
+.theme-switch[hidden] {
+	display: none;
+}
+.theme-switch__knob {
+	position: absolute;
+	top: 0.2rem;
+	left: 0.2rem;
+	width: 1.15rem;
+	height: 1.15rem;
+	border-radius: 50%;
+	background: var(--switch-knob);
+	transition: transform 200ms ease-out, background-color 200ms;
+}
+.theme-switch[aria-checked='true'] .theme-switch__knob {
+	transform: translateX(1.05rem);
+}
+
 .tagline {
 	max-width: 52ch;
 	margin: 0.9rem 0 0;
@@ -587,6 +623,15 @@ a.pill:hover {
 	}
 	.prose > p:first-of-type::first-letter {
 		font-size: 4rem;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.theme-anim,
+	.theme-anim *,
+	.theme-anim *::before,
+	.theme-anim *::after {
+		transition: background-color 200ms, color 200ms, border-color 200ms, text-decoration-color 200ms !important;
 	}
 }
 
