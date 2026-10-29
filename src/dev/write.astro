@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { url } from '../utils/url';
 ---
 
-<BaseLayout title="Editor" description="Lokaler Editor für Beiträge." noindex>
+<BaseLayout title="Editor" description="Lokaler Editor für Beiträge." noindex search={false}>
 	<h1 class="page-title">Editor</h1>
 	<p class="meta">Nur lokal im Dev-Server. Speichern schreibt die Datei nach <code>src/content/posts/</code>. Committen und Pushen machst du selbst.</p>
 

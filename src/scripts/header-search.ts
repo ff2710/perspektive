@@ -21,13 +21,19 @@ if (form && input && list && status) {
 
 	const searchPage = (query: string) => `${form.action}?q=${encodeURIComponent(query)}`;
 
-	function close() {
-		list!.hidden = true;
-		list!.replaceChildren();
+	function resetActive() {
 		options = [];
 		active = -1;
-		input!.setAttribute('aria-expanded', 'false');
 		input!.removeAttribute('aria-activedescendant');
+	}
+
+	function close() {
+		clearTimeout(timer); // eine noch wartende oder laufende Suche darf die Liste nicht wieder öffnen
+		run++;
+		list!.hidden = true;
+		list!.replaceChildren();
+		resetActive();
+		input!.setAttribute('aria-expanded', 'false');
 	}
 
 	function setActive(index: number) {
@@ -35,7 +41,6 @@ if (form && input && list && status) {
 		options.forEach((option, i) => option.setAttribute('aria-selected', String(i === index)));
 		if (index >= 0) {
 			input!.setAttribute('aria-activedescendant', options[index].id);
-			options[index].scrollIntoView({ block: 'nearest' });
 		} else {
 			input!.removeAttribute('aria-activedescendant');
 		}
@@ -49,6 +54,8 @@ if (form && input && list && status) {
 	}
 
 	function message(text: string) {
+		resetActive();
+		list!.removeAttribute('role'); // eine Meldung ist keine Auswahlliste
 		const p = document.createElement('p');
 		p.className = 'search-box__message';
 		p.textContent = text;
@@ -59,10 +66,13 @@ if (form && input && list && status) {
 	}
 
 	function render(data: PagefindData[], total: number, query: string) {
+		resetActive();
+		list!.setAttribute('role', 'listbox');
 		options = data.map((entry, i) => {
 			const link = document.createElement('a');
 			link.id = `kopf-treffer-${i}`;
 			link.href = entry.url;
+			link.tabIndex = -1; // der Fokus bleibt im Feld, Auswahl per Pfeiltasten
 			link.setAttribute('role', 'option');
 			link.setAttribute('aria-selected', 'false');
 			const title = document.createElement('span');
@@ -82,13 +92,13 @@ if (form && input && list && status) {
 		all.id = 'kopf-treffer-alle';
 		all.href = searchPage(query);
 		all.className = 'search-box__all';
+		all.tabIndex = -1;
 		all.setAttribute('role', 'option');
 		all.setAttribute('aria-selected', 'false');
 		all.textContent = total === 1 ? 'Treffer in der Suche öffnen' : `Alle ${total} Treffer anzeigen`;
 		options.push(all);
 		list!.replaceChildren(...options.map(item));
 		list!.hidden = false;
-		active = -1;
 		input!.setAttribute('aria-expanded', 'true');
 		status!.textContent = `${total} Treffer. Mit den Pfeiltasten auswählen.`;
 	}
@@ -119,11 +129,13 @@ if (form && input && list && status) {
 	}
 
 	input.addEventListener('input', () => {
+		setActive(-1);
 		clearTimeout(timer);
 		timer = window.setTimeout(search, 120);
 	});
 
 	input.addEventListener('keydown', (event) => {
+		if (event.isComposing) return; // Eingabemethoden (z. B. Japanisch) nicht stören
 		const open = !list.hidden && options.length > 0;
 		if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
 			if (!open) {
@@ -159,12 +171,18 @@ if (form && input && list && status) {
 		if (!form.contains(event.relatedTarget as Node | null)) close();
 	});
 	input.addEventListener('focus', () => {
+		void loadPagefind(form.dataset.pagefind!); // schon beim Fokus laden, dann ist der erste Treffer schneller da
 		if (input.value.trim() && list.hidden) search();
+	});
+
+	// Tippen oder Tippen irgendwo außerhalb schließt die Liste (auch auf dem Handy, wo es kein Escape gibt).
+	document.addEventListener('pointerdown', (event) => {
+		if (!form.contains(event.target as Node)) close();
 	});
 
 	// "/" springt in die Suche (wie auf vielen Seiten), außer man tippt gerade irgendwo.
 	document.addEventListener('keydown', (event) => {
-		if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return;
+		if (event.key !== '/' || event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
 		const target = event.target as HTMLElement | null;
 		if (target && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
 		event.preventDefault();

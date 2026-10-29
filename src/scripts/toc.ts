@@ -44,16 +44,19 @@ if (toc) {
 			}
 			update();
 		},
-		{ rootMargin: '10000px 0px -70% 0px' },
+		{ rootMargin: '100000px 0px -70% 0px' },
 	);
 	for (const entry of entries) headings.observe(entry.target);
 
-	// Ende des Beitrags erreicht (der Fußbereich kommt ins Bild): der letzte Eintrag gilt.
-	const end = document.querySelector('.article__foot');
+	// Wirklich am Ende der Seite (der Seitenfuß ist ganz sichtbar): der letzte Eintrag gilt.
+	const end = document.querySelector('.footer');
 	if (end) {
-		new IntersectionObserver((changes) => {
-			atEnd = changes.some((change) => change.isIntersecting);
-			update();
-		}).observe(end);
+		new IntersectionObserver(
+			(changes) => {
+				atEnd = changes.some((change) => change.isIntersecting);
+				update();
+			},
+			{ threshold: 1 },
+		).observe(end);
 	}
 }
