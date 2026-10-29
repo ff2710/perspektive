@@ -573,8 +573,61 @@ a.pill:hover {
 	margin: 0 0 0.75rem;
 	font-size: 1.1rem;
 }
+.footnotes__toggle {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	margin: 0 0 0.75rem;
+	padding: 0.25rem 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+.footnotes__toggle:hover {
+	color: var(--contrast);
+}
+.footnotes__arrow {
+	flex: none;
+	transition: transform 200ms ease-out;
+}
+.footnotes__toggle[aria-expanded='false'] .footnotes__arrow {
+	transform: rotate(-90deg);
+}
+.footnotes--enhanced ol:not([hidden]) {
+	animation: footnotes-open 200ms ease-out;
+}
+.prose .footnotes--enhanced h2 {
+	margin-bottom: 0;
+}
+.footnotes--enhanced .footnotes__toggle {
+	margin-bottom: 0;
+}
+.footnotes--enhanced ol {
+	margin-top: 0.75rem;
+}
+@keyframes footnotes-open {
+	from {
+		opacity: 0;
+	}
+}
+
+@media print {
+	.prose .footnotes ol[hidden] {
+		display: block;
+		content-visibility: visible;
+	}
+	.footnotes__arrow {
+		display: none;
+	}
+}
 .prose .footnotes ol {
 	margin: 0;
+}
+.prose .footnotes li,
+.prose sup a {
+	scroll-margin-top: 6rem;
 }
 
 .article__foot {
@@ -640,6 +693,7 @@ a.pill:hover {
 	*::before,
 	*::after {
 		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
 	}
 }
 
