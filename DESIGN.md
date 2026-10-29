@@ -93,4 +93,11 @@ Textauswahl in `--mark`, Caret in `--contrast`, Scrollbar-Farbe aus Palette, Fok
 
 ## Bewegung
 
-Erst Phase 5 (Emil). Bis dahin nur CSS-Übergänge auf Farbe (150 ms), alles hinter `prefers-reduced-motion`.
+Phase 5 (Emil). Kurz und kontrolliert, nichts, was vom Lesen ablenkt, keine Dauerschleifen. Nur `transform` und `opacity`, Kurve `--ease-out` (`cubic-bezier(0.23, 1, 0.32, 1)`), alles hinter `prefers-reduced-motion: no-preference`.
+
+- **Seitenwechsel:** Überblendung 150 ms, nativ per `@view-transition` (kein Router).
+- **Druck-Feedback:** Pills, Schalter, Fußnoten-Button `scale(0.97)`, 120 ms.
+- **Aufmacher mit Maus:** grüner Balken wächst per `scaleX(1.5)`, 220 ms.
+- **Einblenden beim Scrollen:** nur Blöcke unter dem Text (Themen, Autorenkasten, Weiterlesen), `opacity` und 14 px Verschiebung, nie der Fließtext.
+- **Vorschau-Fenster:** 140 ms, wächst von der Seite des Auslösers aus `scale(0.97)`, Ausblenden sofort.
+- **Hero-Zoom:** erst mit dem ersten Foto.

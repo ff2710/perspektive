@@ -22,6 +22,7 @@
 	--sans: 'Archivo Variable', system-ui, sans-serif;
 	--serif: 'Source Serif 4 Variable', Georgia, serif;
 
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 	--gutter: clamp(1rem, 4vw, 3rem);
 	--page: 1200px;
 	--measure: 680px;
@@ -175,7 +176,7 @@ img {
 	border-radius: 99px;
 	background: var(--switch-track);
 	cursor: pointer;
-	transition: background-color 200ms;
+	transition: background-color 200ms, transform 120ms var(--ease-out);
 }
 .theme-switch[hidden] {
 	display: none;
@@ -270,7 +271,7 @@ main {
 	font-size: 0.85rem;
 	line-height: 1.5;
 	text-decoration: none;
-	transition: background-color 150ms, color 150ms;
+	transition: background-color 150ms, color 150ms, transform 120ms var(--ease-out);
 }
 a.pill:hover {
 	background: var(--accent);
@@ -724,7 +725,9 @@ a.pill:hover {
 	margin: 0 0 0.75rem;
 	font-size: 1.1rem;
 }
+/* Druck-Feedback: kleine Dinge, die man anklickt, geben kurz nach */
 .footnotes__toggle {
+	transition: color 150ms, transform 120ms var(--ease-out);
 	display: flex;
 	align-items: center;
 	gap: 0.6rem;
@@ -922,12 +925,14 @@ a.pill:hover {
 	font-size: 0.95rem;
 	line-height: 1.4;
 	opacity: 0;
+	transform: scale(0.97);
 }
 .preview[hidden] {
 	display: none;
 }
 .preview.is-visible {
 	opacity: 1;
+	transform: none;
 }
 .preview p {
 	margin: 0;
@@ -973,6 +978,65 @@ a.pill:hover {
 
 @media (prefers-reduced-motion: no-preference) {
 	.preview {
-		transition: opacity 120ms ease-out;
+		transition: opacity 120ms var(--ease-out), transform 140ms var(--ease-out);
+	}
+}
+
+/* Bewegung (Phase 5). Regeln: nichts, was vom Lesen ablenkt; keine Dauerschleifen;
+   alles nur mit transform/opacity; ohne Unterstützung bleibt der Inhalt einfach sichtbar. */
+
+@media (prefers-reduced-motion: no-preference) {
+	/* Seitenwechsel: kurze Überblendung (nativ im Browser, kein Router, kein Neustart der Skripte). */
+	@view-transition {
+		navigation: auto;
+	}
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 150ms;
+		animation-timing-function: var(--ease-out);
+	}
+
+	/* Druck-Feedback */
+	.pill:active,
+	.theme-switch:active,
+	.footnotes__toggle:active {
+		transform: scale(0.97);
+	}
+
+	/* Blöcke unter dem Text blenden weich ein, sobald sie ins Bild kommen (nie der Fließtext selbst). */
+	@supports (animation-timeline: view()) {
+		.topics,
+		.article__foot,
+		.further .wrap {
+			animation: reveal linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 35%;
+		}
+	}
+}
+
+@keyframes reveal {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+}
+
+/* Aufmacher unter der Maus: der grüne Balken wächst ein Stück (nur Geräte mit Maus). */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+	.feature::before {
+		transform-origin: left;
+		transition: transform 220ms var(--ease-out);
+	}
+	.feature:hover::before {
+		transform: scaleX(1.5);
+	}
+}
+
+@media print {
+	.topics,
+	.article__foot,
+	.further .wrap {
+		animation: none;
 	}
 }

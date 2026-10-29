@@ -107,17 +107,30 @@ function place(a: HTMLAnchorElement, at: 'pointer' | 'element') {
 	const h = tip.offsetHeight;
 	let x: number;
 	let y: number;
+	let flippedX = false;
+	let flippedY = false;
 	if (at === 'pointer') {
 		x = pointer.x + GAP;
 		y = pointer.y + GAP;
-		if (x + w > viewportWidth() - MARGIN) x = pointer.x - w - GAP;
-		if (y + h > innerHeight - MARGIN) y = pointer.y - h - GAP;
+		if (x + w > viewportWidth() - MARGIN) {
+			x = pointer.x - w - GAP;
+			flippedX = true;
+		}
+		if (y + h > innerHeight - MARGIN) {
+			y = pointer.y - h - GAP;
+			flippedY = true;
+		}
 	} else {
 		const rect = a.getBoundingClientRect();
 		x = rect.left;
 		y = rect.bottom + 8;
-		if (y + h > innerHeight - MARGIN) y = rect.top - h - 8;
+		if (y + h > innerHeight - MARGIN) {
+			y = rect.top - h - 8;
+			flippedY = true;
+		}
 	}
+	// Das Fenster wächst von der Seite aus, an der der Auslöser liegt.
+	tip.style.transformOrigin = `${flippedY ? 'bottom' : 'top'} ${flippedX ? 'right' : 'left'}`;
 	tip.style.left = `${clamp(x, MARGIN, viewportWidth() - w - MARGIN)}px`;
 	tip.style.top = `${clamp(y, MARGIN, innerHeight - h - MARGIN)}px`;
 }
