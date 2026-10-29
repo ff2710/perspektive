@@ -9,13 +9,20 @@ interface Props {
 	title?: string;
 	description?: string;
 	home?: boolean;
+	/** Open-Graph-Typ: "article" für Beiträge, sonst "website". */
+	type?: 'website' | 'article';
+	publishedTime?: Date;
+	tags?: string[];
+	/** Seiten, die nicht in Suchmaschinen sollen (z. B. die Suche selbst). */
+	noindex?: boolean;
 }
 
 const siteTitle = 'Fidels Perspektive';
 const siteDescription =
 	'Ich bin Fidel, Politikwissenschaftsstudent, und teile hier meine Perspektive zu aktuellen politischen Themen.';
-const { title, description = siteDescription, home = false } = Astro.props;
+const { title, description = siteDescription, home = false, type = 'website', publishedTime, tags = [], noindex = false } = Astro.props;
 const pageTitle = title ? `${title} · ${siteTitle}` : siteTitle;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
 const nav = [
 	{ label: 'Themen', href: url('/themen/') },
@@ -32,6 +39,21 @@ const Wordmark = home ? 'h1' : 'p';
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<meta name="author" content="Fidel" />
+		<meta name="theme-color" content="#fffefb" />
+		{noindex && <meta name="robots" content="noindex" />}
+		<link rel="canonical" href={canonical} />
+		<link rel="alternate" type="application/rss+xml" title={siteTitle} href={url('/rss.xml')} />
+		<link rel="sitemap" href={url('/sitemap-index.xml')} />
+		<meta property="og:site_name" content={siteTitle} />
+		<meta property="og:locale" content="de_DE" />
+		<meta property="og:type" content={type} />
+		<meta property="og:title" content={title ?? siteTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta name="twitter:card" content="summary" />
+		{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+		{type === 'article' && tags.map((tag) => <meta property="article:tag" content={tag} />)}
 		<link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
 		<link rel="icon" href={url('/favicon.ico')} />
 		<title>{pageTitle}</title>
@@ -110,7 +132,7 @@ const Wordmark = home ? 'h1' : 'p';
 			<div class="wrap footer__row">
 				<span><span class="footer__name">{siteTitle}</span> · © {new Date().getFullYear()} Fidel</span>
 				<span>
-					<a href={url('/themen/')}>Themen</a> · <a href={url('/ueber-mich/')}>Über mich</a>
+					<a href={url('/themen/')}>Themen</a> · <a href={url('/ueber-mich/')}>Über mich</a> · <a href={url('/rss.xml')}>RSS</a>
 				</span>
 			</div>
 		</footer>
