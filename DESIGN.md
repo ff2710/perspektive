@@ -30,19 +30,19 @@ Quelle: Palette „Keimling und Himmel" (`#FFFEFB #D7F9F1 #9BE7FF #3A86FF #2D6A4
 
 | Rolle | Token | Hell | Dunkel |
 |---|---|---|---|
-| Seitengrund | `--paper` | `#FFFEFB` | `#101913` |
-| Text | `--ink` | `#0F1A14` | `#E9EFE8` |
-| Gedämpfter Text | `--muted` | `#5A665E` (5,9:1) | `#9AA89E` |
-| Haarlinien | `--line` | `#C9D3CC` | `#2E3D34` |
-| Fläche (Zitat, Autor) | `--surface` | `#F2F5F1` | `#1A2620` |
-| Aufmacher-Fläche (H3) | `--feature` | `#D7F9F1` (Mint) | `#1A2620` |
+| Seitengrund | `--paper` | `#FFFEFB` | `#161616` |
+| Text | `--ink` | `#0F1A14` | `#ECECEC` (15,3:1) |
+| Gedämpfter Text | `--muted` | `#5A665E` (5,9:1) | `#A8A8A8` (7,5:1; auf Aufmacher 5,1:1) |
+| Haarlinien | `--line` | `#C9D3CC` | `#404040` |
+| Fläche (Zitat, Autor) | `--surface` | `#F2F5F1` | `#212121` |
+| Aufmacher-Fläche (H3) | `--feature` | `#D7F9F1` (Mint) | `#353535` (1,6:1 zum Grund, dazu der Salbei-Balken) |
 | Akzent-Füllung (Balken, Pills auf Dunkel) | `--accent` | `#A9DFC0` (Salbei) | `#A9DFC0` |
-| Pill-Hintergrund | `--accent-tint` | `#E4F4EA` | `#1F3A2A` |
-| Grüner Text (Initiale, Fußnotenzahl, Pill-Schrift) | `--accent-text` | `#2D6A4F` (6,3:1) | `#A9DFC0` |
-| Kontrast: Hover, Fokus, Auswahl | `--contrast` | `#1B5FC4` (6,0:1; Füllung `#3A86FF`) | `#8DB8FF` |
+| Pill-Hintergrund | `--accent-tint` | `#E4F4EA` | `#25382C` |
+| Grüner Text (Initiale, Fußnotenzahl, Pill-Schrift) | `--accent-text` | `#2D6A4F` (6,3:1) | `#A9DFC0` (12,1:1) |
+| Kontrast: Hover, Fokus, Auswahl | `--contrast` | `#1B5FC4` (6,0:1; Füllung `#3A86FF`) | `#8DB8FF` (9,0:1) |
 | Markierung / Textauswahl | `--mark` | `#9BE7FF` | `#1F4D66` |
 
-Regeln: Grün trägt die Marke (Pills, Balken, Initiale), Blau reagiert (Hover, Fokus, Textauswahl, Fußnoten-Hover). Blau `#3A86FF` nur als Füllung, als Text immer `--contrast`. Hell und Dunkel gleichwertig, Standard folgt dem System, Umschalter in Phase 2.
+Regeln: Grün trägt die Marke (Pills, Balken, Initiale), Blau reagiert (Hover, Fokus, Textauswahl, Fußnoten-Hover). Blau `#3A86FF` nur als Füllung, als Text immer `--contrast`. Hell und Dunkel gleichwertig. Der Dunkelmodus ist neutrales Anthrazit ohne Farbstich; nur die Akzente (Salbei, Himmelblau) bleiben farbig. Alle dunklen Textpaarungen ≥ 4,5:1 (gemessen).
 
 ## Typografie
 
