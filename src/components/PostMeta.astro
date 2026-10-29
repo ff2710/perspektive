@@ -1,0 +1,14 @@
+---
+import { formatDate, readingMinutes, type Post } from '../utils/posts';
+
+interface Props {
+	post: Post;
+}
+const { post } = Astro.props;
+---
+
+<p class="meta">
+	<b>Fidel</b> · <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time> · {
+		readingMinutes(post)
+	}&nbsp;Min. Lesezeit
+</p>

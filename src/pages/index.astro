@@ -1,18 +1,71 @@
 ---
-const base = import.meta.env.BASE_URL;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Pills from '../components/Pills.astro';
+import PostMeta from '../components/PostMeta.astro';
+import { collectTags, getPosts, readingMinutes } from '../utils/posts';
+import { url } from '../utils/url';
+
+const posts = await getPosts();
+const [featured, ...rest] = posts;
+const latest = rest.slice(0, 5);
+const tags = collectTags(posts);
 ---
 
-<html lang="de">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
-		<link rel="icon" href={`${base}/favicon.ico`} />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Fidels Perspektive</title>
-	</head>
-	<body>
-		<h1>Hello</h1>
-		<p>Fidels Perspektive</p>
-	</body>
-</html>
+<BaseLayout home>
+	{
+		featured ? (
+			<>
+				<div class="home">
+					<article class="feature">
+						<h2 class="feature__title">
+							<a href={url(`/beitraege/${featured.id}/`)}>{featured.data.title}</a>
+						</h2>
+						<p class="feature__teaser">{featured.data.description}</p>
+						<PostMeta post={featured} />
+						<Pills tags={featured.data.tags} />
+					</article>
+
+					<aside class="latest" aria-labelledby="zuletzt">
+						<h2 class="section-title" id="zuletzt">
+							Zuletzt
+						</h2>
+						{latest.length > 0 ? (
+							<ol class="latest__list">
+								{latest.map((post) => (
+									<li class="latest__item">
+										<a href={url(`/beitraege/${post.id}/`)}>{post.data.title}</a>
+										<span class="meta">
+											<b>Fidel</b> · {readingMinutes(post)}&nbsp;Min.
+										</span>
+									</li>
+								))}
+							</ol>
+						) : (
+							<p class="empty">Weitere Beiträge folgen.</p>
+						)}
+					</aside>
+				</div>
+
+				{tags.length > 0 && (
+					<section class="topics" aria-labelledby="themen">
+						<h2 class="section-title" id="themen">
+							Themen
+						</h2>
+						<ul class="topics__list">
+							{tags.map((tag) => (
+								<li>
+									<a href={url(`/themen/${tag.slug}/`)}>
+										{tag.name}
+										<small>{tag.count}</small>
+									</a>
+								</li>
+							))}
+						</ul>
+					</section>
+				)}
+			</>
+		) : (
+			<p class="empty">Noch keine Beiträge.</p>
+		)
+	}
+</BaseLayout>

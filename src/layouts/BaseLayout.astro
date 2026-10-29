@@ -1,0 +1,72 @@
+---
+import '@fontsource-variable/archivo';
+import '@fontsource-variable/source-serif-4';
+import '@fontsource-variable/source-serif-4/wght-italic.css';
+import '../styles/global.css';
+import { url } from '../utils/url';
+
+interface Props {
+	title?: string;
+	description?: string;
+	home?: boolean;
+}
+
+const siteTitle = 'Fidels Perspektive';
+const siteDescription =
+	'Ich bin Fidel, Politikwissenschaftsstudent, und teile hier meine Perspektive zu aktuellen politischen Themen.';
+const { title, description = siteDescription, home = false } = Astro.props;
+const pageTitle = title ? `${title} · ${siteTitle}` : siteTitle;
+
+const nav = [
+	{ label: 'Themen', href: url('/themen/') },
+	{ label: 'Über mich', href: url('/ueber-mich/') },
+];
+const path = Astro.url.pathname;
+const Wordmark = home ? 'h1' : 'p';
+---
+
+<!doctype html>
+<html lang="de" class={home ? 'is-home' : undefined}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+		<link rel="icon" href={url('/favicon.ico')} />
+		<title>{pageTitle}</title>
+	</head>
+	<body>
+		<a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+		<header class="masthead wrap">
+			<div class="masthead__row">
+				<Wordmark class="wordmark"><a href={url('/')}>{siteTitle}</a></Wordmark>
+				<nav class="nav" aria-label="Hauptnavigation">
+					{
+						nav.map((item) => (
+							<a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+								{item.label}
+							</a>
+						))
+					}
+				</nav>
+			</div>
+			{home && <p class="tagline">{siteDescription}</p>}
+			<hr class="masthead__rule" />
+		</header>
+
+		<main id="inhalt" class="wrap">
+			<slot />
+		</main>
+
+		<footer class="footer">
+			<div class="wrap footer__row">
+				<span><span class="footer__name">{siteTitle}</span> · © {new Date().getFullYear()} Fidel</span>
+				<span>
+					<a href={url('/themen/')}>Themen</a> · <a href={url('/ueber-mich/')}>Über mich</a>
+				</span>
+			</div>
+		</footer>
+	</body>
+</html>

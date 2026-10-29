@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { collectTags, getPosts } from '../../utils/posts';
+import { url } from '../../utils/url';
+
+const tags = collectTags(await getPosts());
+---
+
+<BaseLayout title="Themen" description="Alle Themen von Fidels Perspektive auf einen Blick.">
+	<h1 class="page-title">Themen</h1>
+	{
+		tags.length > 0 ? (
+			<ul class="topics__list">
+				{tags.map((tag) => (
+					<li>
+						<a href={url(`/themen/${tag.slug}/`)}>
+							{tag.name}
+							<small>{tag.count}</small>
+						</a>
+					</li>
+				))}
+			</ul>
+		) : (
+			<p class="empty">Noch keine Themen.</p>
+		)
+	}
+</BaseLayout>

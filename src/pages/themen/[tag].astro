@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostMeta from '../../components/PostMeta.astro';
+import { collectTags, getPosts, tagSlug } from '../../utils/posts';
+import { url } from '../../utils/url';
+
+export async function getStaticPaths() {
+	const posts = await getPosts();
+	return collectTags(posts).map((tag) => ({
+		params: { tag: tag.slug },
+		props: {
+			name: tag.name,
+			posts: posts.filter((post) => post.data.tags.some((t) => tagSlug(t) === tag.slug)),
+		},
+	}));
+}
+
+const { name, posts } = Astro.props;
+---
+
+<BaseLayout title={name} description={`Beiträge zum Thema ${name}.`}>
+	<h1 class="page-title">{name}</h1>
+	<p class="meta">{posts.length}&nbsp;{posts.length === 1 ? 'Beitrag' : 'Beiträge'}</p>
+	<ul class="post-list">
+		{
+			posts.map((post) => (
+				<li class="post-list__item">
+					<h2 class="post-list__title">
+						<a href={url(`/beitraege/${post.id}/`)}>{post.data.title}</a>
+					</h2>
+					<p class="post-list__teaser">{post.data.description}</p>
+					<PostMeta post={post} />
+				</li>
+			))
+		}
+	</ul>
+</BaseLayout>
