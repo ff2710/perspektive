@@ -29,7 +29,7 @@ Wissenschaftliche Erkenntnisse und Meinung sind klar getrennt, jede Aussage ist 
 
 - Fidel schreibt und veröffentlicht allein, selten und in langen Beiträgen (Essay-Länge), nicht im Nachrichtentakt.
 - Texte entstehen zunächst in Markdown; ein lokaler Editor unter `/write` (nur im Dev-Modus) schreibt `src/content/posts/<slug>.md`. Fidel committet und pusht selbst.
-- Veröffentlicht wird statisch über GitHub Pages: `https://ff2710.github.io/fidels-perspektive/`.
+- Veröffentlicht wird statisch über GitHub Pages: `https://ff2710.github.io/perspektive/`.
 - Erster Testinhalt: der Bednarz-Beitrag.
 
 ## Capabilities and Constraints
@@ -43,7 +43,7 @@ Wissenschaftliche Erkenntnisse und Meinung sind klar getrennt, jede Aussage ist 
 
 ## Brand Commitments
 
-- Name vorerst „Fidels Perspektive", Repo `fidels-perspektive`.
+- Name vorerst „Fidels Perspektive", Repo `perspektive`.
 - Seitenbeschreibung (aus dem Plan): „Ich bin Fidel, Politikwissenschaftsstudent und teile hier meine Perspektive zu aktuellen politischen Themen."
 - Ton: persönlich, aber sachlich. Meinung ohne Label, nur über Formulierungen wie „für mich" oder „meiner Ansicht nach"; Faktensätze enthalten kein „ich".
 - Kein lila Verlauf, keine Template- oder Standard-KI-Optik (bindende Vorgabe von Fidel).

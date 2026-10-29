@@ -26,7 +26,7 @@ Faktensätze enthalten kein „ich“. Meinungssätze sagen offen, dass sie Mein
 
 ## Und danach?
 
-Dieser Abschnitt existiert nur, damit die Seite eine zweite Überschrift und genug Länge hat, um Lesezeit und Rhythmus zu zeigen. Ein Link auf [einen anderen Beitrag dieses Blogs](/fidels-perspektive/beitraege/warum-zahlen-allein-nichts-beweisen/) und ein [Link mit langem Pfad](https://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle-inhalt-1234567) zeigen die Vorschau.
+Dieser Abschnitt existiert nur, damit die Seite eine zweite Überschrift und genug Länge hat, um Lesezeit und Rhythmus zu zeigen. Ein Link auf [einen anderen Beitrag dieses Blogs](/perspektive/beitraege/warum-zahlen-allein-nichts-beweisen/) und ein [Link mit langem Pfad](https://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle-inhalt-1234567) zeigen die Vorschau.
 
 [^1]: Platzhalter-Fußnote: Hier stünden zwei Sätze dazu, was die Quelle ist und woher die Aussage stammt, dazu ein Link. Diese Fußnote ist absichtlich länger als üblich, damit man sieht, wie die Vorschau mit langen Belegen umgeht. Sie wird nach einer festen Zeilenzahl abgeschnitten, und wer den ganzen Text lesen will, klickt auf die Zahl und springt zur Fußnote am Ende des Beitrags. Hier stünde außerdem eine zweite Angabe zur Quelle, etwa Autorin, Jahr und Titel, und ein Hinweis darauf, welche Aussage genau damit belegt wird.
 

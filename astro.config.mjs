@@ -9,7 +9,7 @@ export default defineConfig({
 	// Die Entwicklerleiste prüft die Seite im Hintergrund und kann das Scrollen im Dev-Server ruckeln lassen.
 	devToolbar: { enabled: false },
 	site: 'https://ff2710.github.io',
-	base: '/fidels-perspektive',
+	base: '/perspektive',
 	integrations: [sitemap({ filter: (page) => !page.includes('/suche/') }), write()],
 	markdown: {
 		processor: markdownProcessor,

@@ -277,7 +277,7 @@ async function runCommand(name: string) {
 		case 'italic':
 			return milkdown.action(callCommand(toggleEmphasisCommand.key));
 		case 'link': {
-			const href = window.prompt('Adresse des Links (https://… oder /fidels-perspektive/…):');
+			const href = window.prompt('Adresse des Links (https://… oder /perspektive/…):');
 			return href ? milkdown.action(callCommand(toggleLinkCommand.key, { href })) : undefined;
 		}
 		case 'quote':

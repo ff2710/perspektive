@@ -18,7 +18,7 @@ Erster Testinhalt: der Bednarz-Beitrag (Doc in Cowork, wird dort noch auf die ne
 - **Suche:** Pagefind (direkt als `pagefind`-Paket, `npm run build` ruft es nach dem Astro-Build auf; eigene Oberfläche statt der Fertig-UI), läuft statisch. **RSS:** `@astrojs/rss`. **Sitemap:** `@astrojs/sitemap`.
 - **Schriften selbst hosten** (z. B. über Fontsource), nicht von Google-Servern laden (Datenschutz in Deutschland).
 - **Editor:** nur im Dev-Modus, Details in Phase 4.
-- **Deploy:** GitHub Actions (`withastro/action`) → GitHub Pages. Repo `fidels-perspektive` auf Fidels Account `ff2710` (bestätigt per `gh`), erreichbar unter `https://ff2710.github.io/fidels-perspektive/`. Deshalb `base: '/fidels-perspektive'` in `astro.config.mjs`; alle internen Links über `import.meta.env.BASE_URL` bauen.
+- **Deploy:** GitHub Actions (`withastro/action`) → GitHub Pages. Repo `perspektive` auf Fidels Account `ff2710` (bestätigt per `gh`), erreichbar unter `https://ff2710.github.io/perspektive/`. Deshalb `base: '/perspektive'` in `astro.config.mjs`; alle internen Links über `import.meta.env.BASE_URL` bauen.
 
 ## Design-Richtung
 
@@ -92,6 +92,6 @@ Gelten für Inhalte, nicht für Code. Der Blog muss sie gut unterstützen.
 ## Offen / Annahmen
 
 - Blogname vorerst **„Fidels Perspektive"** (Entscheidung 29.10.2026, „erstmal"). Genauer Seitentitel/Tagline noch offen.
-- GitHub-Repo `fidels-perspektive` ist noch nicht auf GitHub angelegt (Anlegen/Push nur nach Fidels OK).
+- GitHub-Repo `perspektive` ist noch nicht auf GitHub angelegt (Anlegen/Push nur nach Fidels OK).
 - Impressum-Angaben (Phase 7).
 - Falls später gewünscht (nicht in v1): Kommentare über giscus, Newsletter, Editor auf der Live-Seite mit GitHub-Login.
