@@ -32,7 +32,6 @@ const nav = [
 ];
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 const Wordmark = home ? 'h1' : 'p';
-const letters = [...siteTitle];
 ---
 
 <!doctype html>
@@ -107,23 +106,7 @@ const letters = [...siteTitle];
 
 		<header class="masthead wrap">
 			<div class="masthead__row">
-				<Wordmark class="wordmark">
-					{
-						home ? (
-							<a href={url('/')} aria-label={siteTitle}>
-								<span aria-hidden="true">
-									{letters.map((letter, i) => (
-										<span class="ch" style={`--i:${i}`}>
-											{letter === ' ' ? '\u00a0' : letter}
-										</span>
-									))}
-								</span>
-							</a>
-						) : (
-							<a href={url('/')}>{siteTitle}</a>
-						)
-					}
-				</Wordmark>
+				<Wordmark class="wordmark"><a href={url('/')}>{siteTitle}</a></Wordmark>
 				<nav class="nav" aria-label="Hauptnavigation">
 					{
 						nav.map((item) => (

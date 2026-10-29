@@ -60,7 +60,6 @@
 
 html {
 	-webkit-text-size-adjust: 100%;
-	scrollbar-color: var(--line) var(--paper);
 }
 
 body {
@@ -1221,13 +1220,8 @@ a.pill:hover {
 		transform: scale(0.97);
 	}
 
-	/* Lesefortschritt: dünne Linie oben, wächst mit dem Scrollen (nur Beitragsseiten) */
+	/* Scroll-gekoppelte Effekte gibt es nur auf der Startseite. Beitragsseiten bleiben beim Scrollen unberührt. */
 	@supports (animation-timeline: scroll()) {
-		.progress {
-			animation: progress linear both;
-			animation-timeline: scroll(root block);
-		}
-
 		/* Der große Schriftzug auf der Startseite wird beim Wegscrollen leichter und enger. */
 		.is-home .wordmark a {
 			display: inline-block;
@@ -1249,9 +1243,7 @@ a.pill:hover {
 			animation-range: entry 0% entry 80%;
 		}
 
-		.topics,
-		.article__foot,
-		.further .wrap {
+		.topics {
 			animation: reveal linear both;
 			animation-timeline: view();
 			animation-range: entry 0% entry 35%;
@@ -1262,12 +1254,7 @@ a.pill:hover {
 @keyframes reveal {
 	from {
 		opacity: 0;
-		transform: translateY(14px);
-	}
-}
-@keyframes progress {
-	to {
-		transform: scaleX(1);
+		transform: translateY(10px);
 	}
 }
 @keyframes wordmark-lighten {
@@ -1287,19 +1274,8 @@ a.pill:hover {
 	}
 }
 
-/* Lesefortschritt: ohne Bewegung oder ohne Unterstützung bleibt die Linie unsichtbar */
-.progress {
-	position: fixed;
-	inset: 0 0 auto 0;
-	z-index: 40;
-	height: 3px;
-	background: var(--accent-text);
-	transform: scaleX(0);
-	transform-origin: left;
-	pointer-events: none;
-}
 
-/* Startseite: Eingangs-Choreografie (einmal beim Laden, unter einer Sekunde, danach Ruhe) */
+/* Startseite: Eingangs-Choreografie. Bewusst dezent: einmal beim Laden, etwa eine Sekunde, nur kleine Wege. */
 .word {
 	display: inline-block;
 	overflow: hidden;
@@ -1313,57 +1289,53 @@ a.pill:hover {
 .feature__words {
 	display: inline-block;
 }
-.ch {
-	display: inline-block;
-}
 
 @media (prefers-reduced-motion: no-preference) {
-	.is-home .ch {
-		animation: letter-in 650ms var(--ease-out) both;
-		animation-delay: calc(var(--i) * 26ms);
+	.is-home .wordmark {
+		animation: rise-in 500ms var(--ease-out) both;
 	}
 	.is-home .masthead__tools {
-		animation: rise-in 550ms var(--ease-out) 420ms both;
+		animation: rise-in 450ms var(--ease-out) 150ms both;
 	}
 	.is-home .nav {
-		animation: rise-in 550ms var(--ease-out) 460ms both;
+		animation: rise-in 450ms var(--ease-out) 200ms both;
 	}
 	.is-home .tagline {
-		animation: rise-in 600ms var(--ease-out) 500ms both;
+		animation: rise-in 450ms var(--ease-out) 250ms both;
 	}
 	.feature {
-		animation: panel-in 800ms var(--ease-out) 200ms both;
+		animation: fade-in 500ms var(--ease-out) 100ms both;
 	}
 	.word__inner {
-		animation: word-up 700ms var(--ease-out) both;
-		animation-delay: calc(420ms + var(--i) * 70ms);
+		animation: word-up 550ms var(--ease-out) both;
+		animation-delay: calc(200ms + var(--i) * 45ms);
 	}
 	.feature__teaser {
-		animation: rise-in 550ms var(--ease-out) 800ms both;
+		animation: rise-in 450ms var(--ease-out) 500ms both;
 	}
 	.feature .meta {
-		animation: rise-in 550ms var(--ease-out) 860ms both;
+		animation: rise-in 450ms var(--ease-out) 550ms both;
 	}
 	.feature .pills {
-		animation: rise-in 550ms var(--ease-out) 920ms both;
+		animation: rise-in 450ms var(--ease-out) 600ms both;
 	}
 	.latest__item {
-		animation: rise-in 550ms var(--ease-out) both;
+		animation: rise-in 450ms var(--ease-out) both;
 	}
 	.latest__item:nth-child(1) {
-		animation-delay: 650ms;
+		animation-delay: 350ms;
 	}
 	.latest__item:nth-child(2) {
-		animation-delay: 730ms;
+		animation-delay: 410ms;
 	}
 	.latest__item:nth-child(3) {
-		animation-delay: 810ms;
+		animation-delay: 470ms;
 	}
 	.latest__item:nth-child(n + 4) {
-		animation-delay: 890ms;
+		animation-delay: 530ms;
 	}
 
-	/* Beim Weiterscrollen driftet der Titel des Aufmachers ein Stück nach oben (Tiefe). */
+	/* Beim Weiterscrollen driftet der Titel des Aufmachers ein kleines Stück nach oben (Tiefe). */
 	@supports (animation-timeline: view()) {
 		.feature__words {
 			animation: drift linear both;
@@ -1372,31 +1344,26 @@ a.pill:hover {
 		}
 	}
 }
-@keyframes letter-in {
-	from {
-		opacity: 0;
-		transform: translateY(0.45em);
-	}
-}
 @keyframes rise-in {
 	from {
 		opacity: 0;
-		transform: translateY(12px);
+		transform: translateY(6px);
 	}
 }
-@keyframes panel-in {
+@keyframes fade-in {
 	from {
-		clip-path: inset(0 100% 0 0);
+		opacity: 0;
 	}
 }
 @keyframes word-up {
 	from {
-		transform: translateY(105%);
+		opacity: 0;
+		transform: translateY(70%);
 	}
 }
 @keyframes drift {
 	to {
-		transform: translateY(-28px);
+		transform: translateY(-20px);
 	}
 }
 
@@ -1448,12 +1415,7 @@ a.pill:hover {
 }
 
 @media print {
-	.topics,
-	.article__foot,
-	.further .wrap {
+	.topics {
 		animation: none;
-	}
-	.progress {
-		display: none;
 	}
 }

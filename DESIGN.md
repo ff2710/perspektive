@@ -98,13 +98,12 @@ Phase 5 (Emil). Kurz und kontrolliert, nichts, was vom Lesen ablenkt, keine Daue
 - **Seitenwechsel:** Überblendung 150 ms, nativ per `@view-transition` (kein Router).
 - **Druck-Feedback:** Pills, Schalter, Fußnoten-Button `scale(0.97)`, 120 ms.
 - **Aufmacher mit Maus:** grüner Balken wächst per `scaleX(1.5)`, 220 ms.
-- **Einblenden beim Scrollen:** nur Blöcke unter dem Text (Themen, Autorenkasten, Weiterlesen), `opacity` und 14 px Verschiebung, nie der Fließtext.
+- **Einblenden beim Scrollen:** nur auf der Startseite (Themen-Liste), `opacity` und 10 px Verschiebung. **Beitragsseiten haben keinerlei scroll-gekoppelte Effekte**, damit das Scrollen mit dem Mausrad ungestört flüssig bleibt (Fließtext, Fortschrittslinie und Einblenden unter dem Text wurden deshalb entfernt).
 - **Vorschau-Fenster:** 140 ms, wächst von der Seite des Auslösers aus `scale(0.97)`, Ausblenden sofort.
 - **Schrift beim Scrollen:** Der große Schriftzug der Startseite wird in den ersten 320 px leichter und enger (`font-weight` 650 → 380). Kurze Überschriften („Zuletzt“, „Themen“, „Weiterlesen“) setzen sich beim Einblenden: erst weit und dünn, dann fest und kräftig. Nur einzeilige Texte (kein Umbruch, kein Springen).
-- **Lesefortschritt:** dünne Linie in `--accent-text` am oberen Rand der Beitragsseiten, wächst mit dem Scrollen (`scaleX`).
 - **Link-Highlight:** Beim Hover oder Tastaturfokus fährt ein Textmarker (`--mark`, einfarbig) von links unter Links im Fließtext, 240 ms.
 - **Theme-Schalter:** Kapsel mit Sonne und Mond, ein Salbei-Knopf gleitet unter das aktive Symbol (260 ms), das aktive Symbol ist dunkel, das andere gedämpft und leicht gedreht.
-- **Startseite, Eingangs-Choreografie (einmal beim Laden, etwa 1,5 s):** Der Schriftzug erscheint Buchstabe für Buchstabe (steigt 0.45em auf, 26 ms Versatz), Suche, Schalter, Links und Beschreibung steigen danach auf, der Aufmacher wischt von links auf, sein Titel steigt Wort für Wort aus einer Maske (70 ms Versatz), Teaser, Meta-Zeile, Pills und die Liste „Zuletzt“ folgen gestaffelt. Beim Weiterscrollen driftet der Titel des Aufmachers 28 px nach oben.
+- **Startseite, Eingangs-Choreografie (einmal beim Laden, dezent, etwa 1 s):** Schriftzug, Suche, Links und Beschreibung steigen 6 px auf und blenden ein, der Aufmacher blendet ein, sein Titel steigt Wort für Wort aus einer Maske (45 ms Versatz), danach Teaser, Meta-Zeile, Pills und die Liste „Zuletzt“ (6 px, 60 ms Versatz). Beim Weiterscrollen driftet der Titel des Aufmachers 20 px nach oben.
 - **Hover auf der Startseite (nur Maus):** Themen-Zeilen ziehen eine grüne Linie von links und schieben die Zahl ein Stück ein, Einträge in „Zuletzt“ rücken 6 px nach rechts.
 - **Suchleiste im Kopf:** Pillenform wie der Schalter, Lupe links, Taste `/` springt hinein, Treffer erscheinen beim Tippen (bis zu 5, mit Datum), Pfeiltasten und Enter, Escape schließt.
 - **Hero-Zoom:** erst mit dem ersten Foto.

@@ -34,6 +34,7 @@ document.querySelectorAll<HTMLAnchorElement>('.prose a[title]').forEach((a) => {
 let pointer = { x: 0, y: 0 };
 let current: HTMLAnchorElement | null = null;
 let showTimer = 0;
+let lastScroll = 0;
 let hideTimer = 0;
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), Math.max(min, max));
@@ -180,7 +181,7 @@ document.addEventListener(
 );
 
 document.addEventListener('pointerover', (event) => {
-	if (event.pointerType === 'touch') return;
+	if (event.pointerType === 'touch' || performance.now() - lastScroll < 250) return;
 	if (tip.contains(event.target as Node)) return;
 	const a = targetFor(event.target);
 	if (!a) return;
@@ -221,4 +222,13 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('pointerdown', (event) => {
 	if (!tip.contains(event.target as Node)) hide();
 });
-window.addEventListener('scroll', () => !tip.hidden && hide(), { passive: true });
+// Beim Scrollen ruht die Vorschau: Links wandern unter dem stillstehenden Zeiger durch, das darf keine Arbeit auslösen.
+window.addEventListener(
+	'scroll',
+	() => {
+		lastScroll = performance.now();
+		clearTimeout(showTimer);
+		if (!tip.hidden) hide();
+	},
+	{ passive: true },
+);
