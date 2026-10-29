@@ -1216,7 +1216,11 @@ a.pill:hover {
 	@supports (animation-timeline: scroll()) {
 		/* Lesefortschritt: dünne Linie oben, wächst mit dem Scrollen (nur Beitragsseiten) */
 		.progress {
-			animation: progress linear both;
+			/* Einzel-Eigenschaften statt Kurzschreibweise: der Minifizierer würde animation und animation-timeline
+			   zu einer Form verschmelzen, die Chrome verwirft. */
+			animation-name: progress;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
 			animation-timeline: scroll(root block);
 		}
 
@@ -1224,7 +1228,11 @@ a.pill:hover {
 		.is-home .wordmark a {
 			display: inline-block;
 			white-space: nowrap;
-			animation: wordmark-lighten linear both;
+			/* Einzel-Eigenschaften statt Kurzschreibweise: der Minifizierer würde animation und animation-timeline
+			   zu einer Form verschmelzen, die Chrome verwirft. */
+			animation-name: wordmark-lighten;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
 			animation-timeline: scroll(root block);
 			animation-range: 0 320px;
 		}
@@ -1236,7 +1244,11 @@ a.pill:hover {
 		   Nur dort: Gewicht und Laufweite berechnen den Text neu, auf Lese-Seiten soll das Scrollen unberührt bleiben. */
 		.is-home .section-title {
 			white-space: nowrap;
-			animation: settle linear both;
+			/* Einzel-Eigenschaften statt Kurzschreibweise: der Minifizierer würde animation und animation-timeline
+			   zu einer Form verschmelzen, die Chrome verwirft. */
+			animation-name: settle;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
 			animation-timeline: view();
 			animation-range: entry 0% entry 80%;
 		}
@@ -1244,7 +1256,11 @@ a.pill:hover {
 		.topics,
 		.article__foot,
 		.further .wrap {
-			animation: reveal linear both;
+			/* Einzel-Eigenschaften statt Kurzschreibweise: der Minifizierer würde animation und animation-timeline
+			   zu einer Form verschmelzen, die Chrome verwirft. */
+			animation-name: reveal;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
 			animation-timeline: view();
 			animation-range: entry 0% entry 35%;
 		}
@@ -1343,7 +1359,11 @@ a.pill:hover {
 	/* Beim Weiterscrollen driftet der Titel des Aufmachers ein kleines Stück nach oben (Tiefe). */
 	@supports (animation-timeline: view()) {
 		.feature__words {
-			animation: drift linear backwards;
+			/* Einzel-Eigenschaften statt Kurzschreibweise: der Minifizierer würde animation und animation-timeline
+			   zu einer Form verschmelzen, die Chrome verwirft. */
+			animation-name: drift;
+			animation-timing-function: linear;
+			animation-fill-mode: backwards;
 			animation-timeline: view();
 			animation-range: exit 0% exit 100%;
 		}
