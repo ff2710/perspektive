@@ -5,13 +5,12 @@
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
 
 const dom = new JSDOM('<!doctype html><html><body></body></html>', { pretendToBeVisual: true });
 for (const key of ['window', 'document', 'navigator', 'Node', 'HTMLElement', 'Element', 'MutationObserver', 'DOMParser', 'getComputedStyle', 'requestAnimationFrame', 'Range', 'Text', 'Event', 'KeyboardEvent', 'DocumentFragment', 'XMLSerializer', 'CSS', 'CustomEvent']) {
-	try {
-		globalThis[key] = dom.window[key];
-	} catch {}
+	Object.defineProperty(globalThis, key, { value: dom.window[key], configurable: true, writable: true });
 }
 globalThis.addEventListener = (...args) => dom.window.addEventListener(...args);
 globalThis.removeEventListener = (...args) => dom.window.removeEventListener(...args);
@@ -30,9 +29,14 @@ async function pass(markdown) {
 	return result;
 }
 
-const dir = path.resolve('src/content/posts');
+const dir = fileURLToPath(new URL('../src/content/posts', import.meta.url));
+const files = (await fs.readdir(dir)).filter((name) => name.endsWith('.md')).sort();
+if (files.length === 0) {
+	console.log('FEHLER  Keine Beiträge gefunden, nichts geprüft.');
+	process.exit(1);
+}
 let failed = 0;
-for (const file of (await fs.readdir(dir)).filter((name) => name.endsWith('.md')).sort()) {
+for (const file of files) {
 	const raw = await fs.readFile(path.join(dir, file), 'utf8');
 	const body = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').trim();
 	const first = await pass(body);

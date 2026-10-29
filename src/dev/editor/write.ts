@@ -12,7 +12,7 @@ import {
 	wrapInHeadingCommand,
 	wrapInOrderedListCommand,
 } from '@milkdown/kit/preset/commonmark';
-import { callCommand, getMarkdown, replaceAll } from '@milkdown/kit/utils';
+import { callCommand, getMarkdown } from '@milkdown/kit/utils';
 import { slugify } from '../../utils/slug';
 import { createEditor, readable } from './config';
 import './write.css';
@@ -42,10 +42,13 @@ const state = {
 };
 
 let editor: MilkdownEditor | null = null;
-let editorReady: Promise<MilkdownEditor> | null = null;
-let ignoreChangesUntil = 0;
+let building = false;
 let previewTimer = 0;
 let previewRun = 0;
+let openRun = 0;
+
+/** Entfernt führende Leerzeilen und Leerraum am Ende (die Einrückung der ersten Zeile bleibt). */
+const tidy = (text: string) => text.replace(/^(?:[ \t]*\r?\n)+/, '').trimEnd();
 
 function say(message: string, isError = false) {
 	status.textContent = message;
@@ -80,7 +83,9 @@ async function renderPreview() {
 	const run = ++previewRun;
 	try {
 		const { html } = await request('preview', { method: 'POST', body: { markdown: state.markdown } });
-		if (run === previewRun) preview.innerHTML = html; // eigenes, serverseitig gerendertes Markdown
+		// Eigenes Markdown, serverseitig wie auf der echten Seite gerendert; rohes HTML wird bewusst nicht gefiltert.
+		// Fremden Text deshalb nicht ungeprüft in die Markdown-Ansicht einfügen.
+		if (run === previewRun) preview.innerHTML = html;
 	} catch (error) {
 		if (run === previewRun) say(`Vorschau nicht möglich: ${(error as Error).message}`, true);
 	}
@@ -88,15 +93,9 @@ async function renderPreview() {
 
 // --- Dokument ---------------------------------------------------------------------------------
 
-function setMarkdown(value: string, { updateViews = true } = {}) {
-	state.markdown = value;
-	if (updateViews) {
-		markdownArea.value = value;
-		if (editor) {
-			ignoreChangesUntil = performance.now() + 700;
-			editor.action(replaceAll(value));
-		}
-	}
+async function setMarkdown(value: string) {
+	state.markdown = markdownArea.value = value;
+	if (state.mode === 'word') await buildWord();
 	schedulePreview();
 }
 
@@ -128,19 +127,22 @@ function fillFields(data: { title: string; description: string; pubDate: string;
 function newPost() {
 	state.isNew = true;
 	state.slugEdited = false;
-	fillFields({ title: '', description: '', pubDate: new Date().toISOString().slice(0, 10), tags: [], draft: true }, '');
+	fillFields({ title: '', description: '', pubDate: new Date().toLocaleDateString('sv'), tags: [], draft: true }, ''); // sv = JJJJ-MM-TT, lokale Zeit
 	postsSelect.value = '';
-	setMarkdown('');
-	state.dirty = false;
-	say('Neuer Beitrag. Er startet als Entwurf.');
+	void setMarkdown('').then(() => {
+		state.dirty = false;
+		say('Neuer Beitrag. Er startet als Entwurf.');
+	});
 }
 
 async function openPost(slug: string) {
+	const run = ++openRun;
 	try {
 		const data = await request(`post?slug=${encodeURIComponent(slug)}`);
+		if (run !== openRun) return; // inzwischen wurde ein anderer Beitrag gewählt
 		state.isNew = false;
 		fillFields(data.frontmatter, slug);
-		setMarkdown(data.body.trim());
+		await setMarkdown(tidy(data.body));
 		state.dirty = false;
 		say(`„${data.frontmatter.title}“ geöffnet.`);
 	} catch (error) {
@@ -161,33 +163,55 @@ async function save() {
 	const data = fields();
 	const slug = field('slug').value.trim();
 	syncFromWord();
+	const message = `Gespeichert: src/content/posts/${slug}.md. Als Nächstes: committen und pushen.`;
+	// Der Dev-Server lädt die Seite nach dem Schreiben neu: Stand schon vorher merken, danach wird der Beitrag wieder geöffnet.
+	const wasDirty = state.dirty;
+	state.dirty = false; // sonst warnt der Browser beim automatischen Neuladen
 	try {
-		const result = await request('save', { method: 'POST', body: { slug, isNew: state.isNew, frontmatter: data, body: state.markdown } });
+		sessionStorage.setItem('write:after-save', JSON.stringify({ slug, mode: state.mode, message }));
+	} catch {}
+	try {
+		await request('save', { method: 'POST', body: { slug, isNew: state.isNew, frontmatter: data, body: state.markdown } });
 		state.isNew = false;
-		state.dirty = false;
 		field('slug').disabled = true;
-		const message = `Gespeichert: ${result.path}. Als Nächstes: committen und pushen.`;
-		// Der Dev-Server lädt die Seite nach dem Schreiben neu: Stand merken und danach wieder öffnen.
-		try {
-			sessionStorage.setItem('write:after-save', JSON.stringify({ slug, mode: state.mode, message }));
-		} catch {}
 		await loadPosts(slug);
 		say(message);
 	} catch (error) {
+		state.dirty = wasDirty;
+		try {
+			sessionStorage.removeItem('write:after-save');
+		} catch {}
 		say((error as Error).message, true);
 	}
 }
 
 // --- Word-Ansicht -----------------------------------------------------------------------------
 
-async function ensureEditor() {
-	editorReady ??= createEditor(wordRoot, state.markdown, (value) => {
-		if (performance.now() < ignoreChangesUntil) return;
-		state.markdown = value;
-		markDirty();
-		schedulePreview();
-	}).then((created) => (editor = created));
-	return editorReady;
+/** Baut die Word-Ansicht frisch aus state.markdown auf (so startet auch die Rückgängig-Liste leer). */
+async function buildWord() {
+	await destroyWord();
+	building = true;
+	try {
+		editor = await createEditor(wordRoot, state.markdown, (value) => {
+			if (building) return;
+			const next = readable(value).trim();
+			if (next === state.markdown) return; // nur eine andere Schreibweise desselben Textes
+			state.markdown = next;
+			markDirty();
+			schedulePreview();
+		});
+		// Der Editor schreibt den Text leicht vereinheitlicht; das ist der neue Ausgangsstand, keine Änderung des Nutzers.
+		state.markdown = markdownArea.value = readable(editor.action(getMarkdown())).trim();
+	} finally {
+		building = false;
+	}
+}
+
+async function destroyWord() {
+	const old = editor;
+	editor = null;
+	if (old) await old.destroy();
+	wordRoot.replaceChildren();
 }
 
 /** Holt das Markdown direkt aus der Word-Ansicht (der Listener meldet Änderungen nur verzögert). */
@@ -199,12 +223,12 @@ function syncFromWord() {
 async function setMode(mode: 'markdown' | 'word') {
 	if (mode === state.mode) return;
 	if (mode === 'word') {
-		state.markdown = markdownArea.value;
-		ignoreChangesUntil = performance.now() + 700;
-		const created = await ensureEditor();
-		created.action(replaceAll(state.markdown));
+		state.markdown = tidy(markdownArea.value);
+		await buildWord();
+		schedulePreview();
 	} else {
 		syncFromWord();
+		await destroyWord();
 	}
 	state.mode = mode;
 	markdownArea.hidden = mode === 'word';
@@ -226,7 +250,10 @@ function insertFootnote(milkdown: MilkdownEditor) {
 			if (node.type === reference || node.type === definition) highest = Math.max(highest, parseInt(node.attrs.label, 10) || 0);
 		});
 		const label = String(highest + 1);
-		const tr = view.state.tr.replaceSelectionWith(reference.create({ label }), false);
+		const { $to } = view.state.selection;
+		if (!$to.parent.inlineContent || $to.parent.type.spec.code) return; // nur in normalem Text, nicht in Codeblöcken
+		// Nach dem markierten Text einfügen, damit die Auswahl nicht überschrieben wird.
+		const tr = view.state.tr.insert($to.pos, reference.create({ label }));
 		const end = tr.doc.content.size;
 		tr.insert(end, definition.create({ label }, schema.nodes.paragraph.create()));
 		tr.setSelection(TextSelection.create(tr.doc, end + 2)); // Cursor in den neuen Fußnotentext
@@ -236,7 +263,8 @@ function insertFootnote(milkdown: MilkdownEditor) {
 }
 
 async function runCommand(name: string) {
-	const milkdown = await ensureEditor();
+	const milkdown = editor;
+	if (!milkdown) return;
 	switch (name) {
 		case 'paragraph':
 			return milkdown.action(callCommand(turnIntoTextCommand.key));
@@ -277,7 +305,7 @@ root.querySelectorAll<HTMLElement>('[data-field]').forEach((input) =>
 	input.addEventListener('input', () => {
 		markDirty();
 		if (input.dataset.field === 'slug') state.slugEdited = true;
-		if (input.dataset.field === 'title' && state.isNew && !state.slugEdited) field('slug').value = slugify(field('title').value);
+		if (input.dataset.field === 'title' && state.isNew && !state.slugEdited) field('slug').value = slugify(field('title').value).slice(0, 80).replace(/-$/, '');
 		schedulePreview();
 	}),
 );
