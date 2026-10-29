@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { legal } from '../utils/legal';
+
+const gap = (value: string, hint: string) => value.trim() || `[${hint} fehlt]`;
+---
+
+<BaseLayout title="Impressum" description="Angaben zum Anbieter von Fidels Perspektive.">
+	<div class="text-page">
+		<h1 class="page-title">Impressum</h1>
+		<div class="prose">
+			<h2>Angaben gemäß § 5 DDG</h2>
+			<p>
+				{gap(legal.name, 'Name')}<br />
+				{gap(legal.street, 'Straße')}<br />
+				{gap(legal.city, 'PLZ und Ort')}
+			</p>
+			<h2>Kontakt</h2>
+			<p>
+				E-Mail: {legal.email.trim() ? <a href={`mailto:${legal.email}`}>{legal.email}</a> : '[E-Mail fehlt]'}
+			</p>
+			<h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+			<p>
+				{gap(legal.name, 'Name')}, Anschrift wie oben.
+			</p>
+			<h2>Haftung für Links</h2>
+			<p>
+				Dieser Blog verlinkt auf Seiten Dritter, vor allem als Quellenbeleg. Auf deren Inhalte habe ich keinen Einfluss und übernehme dafür keine Gewähr. Zum Zeitpunkt
+				der Verlinkung waren keine Rechtsverstöße erkennbar. Wenn dir einer auffällt, schreib mir, dann prüfe ich den Link.
+			</p>
+		</div>
+	</div>
+</BaseLayout>
