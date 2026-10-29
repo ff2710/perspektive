@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { slugify } from './slug';
 
 export type Post = CollectionEntry<'posts'>;
 
@@ -18,16 +19,7 @@ export function readingMinutes(post: Post): number {
 	return Math.max(1, Math.ceil(words / 200));
 }
 
-export function tagSlug(tag: string): string {
-	return tag
-		.toLowerCase()
-		.replace(/ä/g, 'ae')
-		.replace(/ö/g, 'oe')
-		.replace(/ü/g, 'ue')
-		.replace(/ß/g, 'ss')
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/^-|-$/g, '');
-}
+export const tagSlug = slugify;
 
 /** Alle Themen mit Anzahl der Beiträge, sortiert nach Anzahl und Name. */
 export function collectTags(posts: Post[]): { name: string; slug: string; count: number }[] {

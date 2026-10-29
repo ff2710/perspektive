@@ -1,0 +1,95 @@
+---
+// Lokaler Editor, nur im Dev-Server (siehe src/integrations/write.ts). Gibt es im Build nicht.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../utils/url';
+---
+
+<BaseLayout title="Editor" description="Lokaler Editor für Beiträge." noindex>
+	<h1 class="page-title">Editor</h1>
+	<p class="meta">Nur lokal im Dev-Server. Speichern schreibt die Datei nach <code>src/content/posts/</code>. Committen und Pushen machst du selbst.</p>
+
+	<div class="write" data-write data-api={url('/write-api')}>
+		<div class="write__bar">
+			<label class="write__field write__field--inline">
+				<span>Beitrag</span>
+				<select data-posts></select>
+			</label>
+			<button type="button" class="write__button" data-new>Neu</button>
+			<button type="button" class="write__button write__button--primary" data-save>Speichern</button>
+			<p class="write__status" role="status" data-status></p>
+		</div>
+
+		<div class="write__grid">
+			<section class="write__edit" aria-label="Bearbeiten">
+				<div class="write__meta">
+					<label class="write__field write__field--wide">
+						<span>Titel</span>
+						<input type="text" data-field="title" autocomplete="off" />
+					</label>
+					<label class="write__field write__field--wide">
+						<span>Beschreibung (Einleitung unter dem Titel)</span>
+						<textarea rows="2" data-field="description"></textarea>
+					</label>
+					<label class="write__field">
+						<span>Dateiname</span>
+						<input type="text" data-field="slug" autocomplete="off" spellcheck="false" />
+					</label>
+					<label class="write__field">
+						<span>Datum</span>
+						<input type="date" data-field="pubDate" />
+					</label>
+					<label class="write__field">
+						<span>Aktualisiert (optional)</span>
+						<input type="date" data-field="updatedDate" />
+					</label>
+					<label class="write__field">
+						<span>Themen (mit Komma getrennt)</span>
+						<input type="text" data-field="tags" autocomplete="off" />
+					</label>
+					<label class="write__check">
+						<input type="checkbox" data-field="draft" />
+						<span>Entwurf (wird nicht veröffentlicht)</span>
+					</label>
+				</div>
+
+				<div class="write__modes" role="group" aria-label="Ansicht">
+					<button type="button" class="write__mode" data-mode="markdown" aria-pressed="true">Markdown</button>
+					<button type="button" class="write__mode" data-mode="word" aria-pressed="false">Word-Ansicht</button>
+				</div>
+				<p class="write__hint">Beim Wechsel wird die Schreibweise vereinheitlicht (z. B. Listenzeichen und Leerzeilen).</p>
+
+				<div class="write__toolbar" role="toolbar" aria-label="Formatierung" data-toolbar hidden>
+					<button type="button" data-cmd="paragraph">Absatz</button>
+					<button type="button" data-cmd="h2">Überschrift 2</button>
+					<button type="button" data-cmd="h3">Überschrift 3</button>
+					<button type="button" data-cmd="bold"><b>Fett</b></button>
+					<button type="button" data-cmd="italic"><i>Kursiv</i></button>
+					<button type="button" data-cmd="link">Link</button>
+					<button type="button" data-cmd="quote">Zitat</button>
+					<button type="button" data-cmd="bullets">Liste</button>
+					<button type="button" data-cmd="numbers">Nummeriert</button>
+					<button type="button" data-cmd="rule">Trenner</button>
+					<button type="button" data-cmd="footnote">Fußnote</button>
+				</div>
+
+				<textarea class="write__markdown" data-markdown spellcheck="true" lang="de" aria-label="Markdown"></textarea>
+				<div class="write__word" data-word hidden aria-label="Word-Ansicht"></div>
+			</section>
+
+			<section class="write__preview" aria-label="Vorschau">
+				<p class="write__previewnote">Vorschau, gerendert mit derselben Pipeline wie die echte Seite.</p>
+				<article class="article">
+					<header class="article__head">
+						<h2 class="page-title" data-preview-title></h2>
+						<p class="dek" data-preview-dek></p>
+					</header>
+					<div class="prose" data-preview></div>
+				</article>
+			</section>
+		</div>
+	</div>
+
+	<script>
+		import '../dev/editor/write.ts';
+	</script>
+</BaseLayout>

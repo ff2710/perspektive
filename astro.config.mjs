@@ -1,23 +1,15 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { satteri } from '@astrojs/markdown-satteri';
+import { write } from './src/integrations/write.ts';
+import { markdownProcessor } from './src/markdown.config.mjs';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://ff2710.github.io',
 	base: '/fidels-perspektive',
-	integrations: [sitemap({ filter: (page) => !page.includes('/suche/') })],
+	integrations: [sitemap({ filter: (page) => !page.includes('/suche/') }), write()],
 	markdown: {
-		processor: satteri({
-			features: {
-				gfm: {
-					footnotes: {
-						label: 'Fußnoten',
-						backLabel: 'Zurück zum Text ({reference})',
-					},
-				},
-			},
-		}),
+		processor: markdownProcessor,
 	},
 });
