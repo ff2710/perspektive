@@ -100,4 +100,8 @@ Phase 5 (Emil). Kurz und kontrolliert, nichts, was vom Lesen ablenkt, keine Daue
 - **Aufmacher mit Maus:** grüner Balken wächst per `scaleX(1.5)`, 220 ms.
 - **Einblenden beim Scrollen:** nur Blöcke unter dem Text (Themen, Autorenkasten, Weiterlesen), `opacity` und 14 px Verschiebung, nie der Fließtext.
 - **Vorschau-Fenster:** 140 ms, wächst von der Seite des Auslösers aus `scale(0.97)`, Ausblenden sofort.
+- **Schrift beim Scrollen:** Der große Schriftzug der Startseite wird in den ersten 320 px leichter und enger (`font-weight` 650 → 380). Kurze Überschriften („Zuletzt“, „Themen“, „Weiterlesen“) setzen sich beim Einblenden: erst weit und dünn, dann fest und kräftig. Nur einzeilige Texte (kein Umbruch, kein Springen).
+- **Lesefortschritt:** dünne Linie in `--accent-text` am oberen Rand der Beitragsseiten, wächst mit dem Scrollen (`scaleX`).
+- **Link-Highlight:** Beim Hover oder Tastaturfokus fährt ein Textmarker (`--mark`, einfarbig) von links unter Links im Fließtext, 240 ms.
+- **Theme-Schalter:** Kapsel mit Sonne und Mond, ein Salbei-Knopf gleitet unter das aktive Symbol (260 ms), das aktive Symbol ist dunkel, das andere gedämpft und leicht gedreht.
 - **Hero-Zoom:** erst mit dem ersten Foto.

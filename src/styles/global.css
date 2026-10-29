@@ -14,8 +14,10 @@
 	--accent-text: #2d6a4f;
 	--contrast: #1b5fc4;
 	--mark: #9be7ff;
-	--switch-track: #8a958e;
-	--switch-knob: #ffffff;
+	--switch-track: #e6ebe6;
+	--switch-edge: #aab4ac;
+	--switch-thumb: #a9dfc0;
+	--switch-on: #0f1a14;
 	--band: #0f1a14;
 	--band-ink: #fffefb;
 
@@ -42,8 +44,10 @@
 	--accent-text: #a9dfc0;
 	--contrast: #8db8ff;
 	--mark: #1f4d66;
-	--switch-track: #a9dfc0;
-	--switch-knob: #161616;
+	--switch-track: #2b2b2b;
+	--switch-edge: #5a5a5a;
+	--switch-thumb: #a9dfc0;
+	--switch-on: #0f1a14;
 	--band: #0b0b0b;
 	--band-ink: #ececec;
 }
@@ -164,35 +168,63 @@ img {
 .nav a[aria-current] {
 	border-bottom-color: var(--accent);
 }
-/* Theme-Schalter (Apple-Stil): Track mit rundem Knopf, ohne Icon */
+/* Theme-Schalter: Kapsel mit Sonne und Mond, ein Knopf gleitet unter das aktive Symbol */
 .theme-switch {
 	position: relative;
+	display: flex;
 	flex: none;
+	align-items: center;
+	justify-content: space-between;
 	align-self: center;
-	width: 2.6rem;
-	height: 1.55rem;
-	padding: 0;
-	border: 0;
+	box-sizing: border-box;
+	width: 4.4rem;
+	height: 2.2rem;
+	padding: 0 calc(0.575rem - 1px);
+	border: 1px solid var(--switch-edge);
 	border-radius: 99px;
 	background: var(--switch-track);
 	cursor: pointer;
-	transition: background-color 200ms, transform 120ms var(--ease-out);
+	transition: background-color 200ms, border-color 200ms, transform 120ms var(--ease-out);
 }
 .theme-switch[hidden] {
 	display: none;
 }
-.theme-switch__knob {
+.theme-switch__thumb {
 	position: absolute;
-	top: 0.2rem;
-	left: 0.2rem;
-	width: 1.15rem;
-	height: 1.15rem;
+	top: calc(0.25rem - 1px);
+	left: calc(0.25rem - 1px);
+	width: 1.7rem;
+	height: 1.7rem;
 	border-radius: 50%;
-	background: var(--switch-knob);
-	transition: transform 200ms ease-out, background-color 200ms;
+	background: var(--switch-thumb);
+	transition: transform 260ms var(--ease-out);
 }
-.theme-switch[aria-checked='true'] .theme-switch__knob {
-	transform: translateX(1.05rem);
+:root[data-theme='dark'] .theme-switch__thumb {
+	transform: translateX(2.2rem);
+}
+.theme-switch__icon {
+	position: relative;
+	z-index: 1;
+	width: 1.05rem;
+	height: 1.05rem;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	color: var(--muted);
+	transition: color 200ms, transform 300ms var(--ease-out);
+}
+/* aktives Symbol: dunkel auf dem Knopf, das andere gedämpft und leicht gedreht */
+:root:not([data-theme='dark']) .theme-switch__icon--sun,
+:root[data-theme='dark'] .theme-switch__icon--moon {
+	color: var(--switch-on);
+}
+:root:not([data-theme='dark']) .theme-switch__icon--moon {
+	transform: rotate(25deg) scale(0.85);
+}
+:root[data-theme='dark'] .theme-switch__icon--sun {
+	transform: rotate(-45deg) scale(0.85);
 }
 
 .tagline {
@@ -662,10 +694,16 @@ a.pill:hover {
 	text-decoration-color: var(--accent);
 	text-decoration-thickness: 3px;
 	text-underline-offset: 3px;
-	transition: color 150ms, text-decoration-color 150ms;
+	/* Textmarker: fährt beim Hover von links ein (einfarbige Fläche, kein Verlauf) */
+	background: linear-gradient(var(--mark), var(--mark)) no-repeat 0 100% / 0% 100%;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+	transition: background-size 240ms var(--ease-out), color 150ms, text-decoration-color 150ms;
 }
-.prose a:hover {
-	color: var(--contrast);
+.prose a:hover,
+.prose a:focus-visible {
+	background-size: 100% 100%;
+	color: var(--ink);
 	text-decoration-color: var(--contrast);
 }
 .prose ul,
@@ -710,7 +748,7 @@ a.pill:hover {
 	color: var(--accent-text);
 }
 .prose sup a:hover {
-	color: var(--contrast);
+	color: var(--ink);
 }
 .prose .footnotes {
 	margin-top: 5rem;
@@ -1003,8 +1041,34 @@ a.pill:hover {
 		transform: scale(0.97);
 	}
 
+	/* Lesefortschritt: dünne Linie oben, wächst mit dem Scrollen (nur Beitragsseiten) */
+	@supports (animation-timeline: scroll()) {
+		.progress {
+			animation: progress linear both;
+			animation-timeline: scroll(root block);
+		}
+
+		/* Der große Schriftzug auf der Startseite wird beim Wegscrollen leichter und enger. */
+		.is-home .wordmark a {
+			display: inline-block;
+			white-space: nowrap;
+			animation: wordmark-lighten linear both;
+			animation-timeline: scroll(root block);
+			animation-range: 0 320px;
+		}
+	}
+
 	/* Blöcke unter dem Text blenden weich ein, sobald sie ins Bild kommen (nie der Fließtext selbst). */
 	@supports (animation-timeline: view()) {
+		/* Kurze Überschriften "setzen sich": erst weit gesetzt und dünn, dann fest und kräftig. */
+		.section-title,
+		.further__title {
+			white-space: nowrap;
+			animation: settle linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 80%;
+		}
+
 		.topics,
 		.article__foot,
 		.further .wrap {
@@ -1020,6 +1084,39 @@ a.pill:hover {
 		opacity: 0;
 		transform: translateY(14px);
 	}
+}
+@keyframes progress {
+	to {
+		transform: scaleX(1);
+	}
+}
+@keyframes wordmark-lighten {
+	from {
+		font-weight: 650;
+		letter-spacing: -0.035em;
+	}
+	to {
+		font-weight: 380;
+		letter-spacing: -0.012em;
+	}
+}
+@keyframes settle {
+	from {
+		font-weight: 420;
+		letter-spacing: 0.05em;
+	}
+}
+
+/* Lesefortschritt: ohne Bewegung oder ohne Unterstützung bleibt die Linie unsichtbar */
+.progress {
+	position: fixed;
+	inset: 0 0 auto 0;
+	z-index: 40;
+	height: 3px;
+	background: var(--accent-text);
+	transform: scaleX(0);
+	transform-origin: left;
+	pointer-events: none;
 }
 
 /* Aufmacher unter der Maus: der grüne Balken wächst ein Stück (nur Geräte mit Maus). */
@@ -1038,5 +1135,8 @@ a.pill:hover {
 	.article__foot,
 	.further .wrap {
 		animation: none;
+	}
+	.progress {
+		display: none;
 	}
 }
