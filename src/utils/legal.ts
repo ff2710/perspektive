@@ -1,10 +1,10 @@
 // Angaben für Impressum und Datenschutz. Hier eintragen, sonst bricht der Build auf GitHub ab.
 // Lokal (`npm run build`, `npm run dev`) erscheinen leere Felder als markierte Lücke.
 export const legal = {
-	name: 'Fidel', // vollständiger Name: Vor- und Nachname (mit nur dem Vornamen bricht der Build auf GitHub ab)
-	street: '', // Straße und Hausnummer (oder Postfach / c/o-Adresse)
-	city: '', // PLZ und Ort
-	email: '', // öffentliche Kontakt-E-Mail
+	name: 'Fidel Friczewski', // vollständiger Name: Vor- und Nachname (mit nur dem Vornamen bricht der Build auf GitHub ab)
+	street: 'Markt 38', // Straße und Hausnummer (oder Postfach / c/o-Adresse)
+	city: '51103 Köln', // PLZ und Ort
+	email: 'f.friczewski@outlook.de', // öffentliche Kontakt-E-Mail
 };
 
 export const missing = Object.entries(legal)
