@@ -25,7 +25,8 @@ if (form && input && status && list) {
 		try {
 			pagefind = (await import(/* @vite-ignore */ form!.dataset.pagefind!)) as Pagefind;
 		} catch {
-			unavailable = true;
+			// Im Dev-Server gibt es den Index nie; live kann ein Netzfehler später wieder klappen.
+			unavailable = import.meta.env.DEV;
 		}
 		return pagefind;
 	}
@@ -51,7 +52,10 @@ if (form && input && status && list) {
 				if (item.meta.date) {
 					const meta = document.createElement('p');
 					meta.className = 'meta';
-					meta.textContent = dateFormat.format(new Date(item.meta.date));
+					const time = document.createElement('time');
+					time.dateTime = item.meta.date;
+					time.textContent = dateFormat.format(new Date(item.meta.date));
+					meta.append(time);
 					li.append(meta);
 				}
 				return li;
@@ -75,20 +79,30 @@ if (form && input && status && list) {
 		}
 
 		const engine = await load();
+		if (current !== run) return; // inzwischen wurde etwas Neueres getippt
 		if (!engine) {
-			status!.textContent = 'Die Suche gibt es nur im gebauten Blog (npm run build, dann npm run preview).';
+			status!.textContent = import.meta.env.DEV
+				? 'Die Suche gibt es nur im gebauten Blog (npm run build, dann npm run preview).'
+				: 'Die Suche ist gerade nicht verfügbar. Bitte versuche es später noch einmal.';
 			return;
 		}
 
-		const { results } = await engine.search(query);
-		const data = await Promise.all(results.slice(0, MAX_RESULTS).map((result) => result.data()));
-		if (current !== run) return; // inzwischen wurde etwas Neueres getippt
+		let results: Awaited<ReturnType<Pagefind['search']>>['results'];
+		let data: PagefindData[];
+		try {
+			({ results } = await engine.search(query));
+			data = await Promise.all(results.slice(0, MAX_RESULTS).map((result) => result.data()));
+		} catch {
+			if (current === run) status!.textContent = 'Die Suche ist gerade nicht verfügbar. Bitte versuche es später noch einmal.';
+			return;
+		}
+		if (current !== run) return;
 
 		render(data);
 		status!.textContent =
 			results.length === 0
 				? `Keine Treffer für „${query}“. Versuche einen anderen Begriff.`
-				: `${results.length} ${results.length === 1 ? 'Treffer' : 'Treffer'} für „${query}“${results.length > MAX_RESULTS ? ` (die ersten ${MAX_RESULTS} werden gezeigt)` : ''}.`;
+				: `${results.length} Treffer für „${query}“${results.length > MAX_RESULTS ? ` (die ersten ${MAX_RESULTS} werden gezeigt)` : ''}.`;
 	}
 
 	input.addEventListener('input', () => {
