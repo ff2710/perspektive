@@ -46,6 +46,11 @@ const { Content, headings } = await render(post);
 			<footer class="article__foot" data-pagefind-ignore>
 				<Pills tags={post.data.tags} />
 
+				<div class="share" data-share hidden>
+					<button type="button" class="share__button">Beitrag teilen</button>
+					<span class="visually-hidden" role="status" data-share-status></span>
+				</div>
+
 				<aside class="author" aria-label="Über den Autor">
 					<b>Fidel</b>
 					<p>Politikwissenschaftsstudent. Ich teile hier meine Perspektive zu aktuellen politischen Themen.</p>
@@ -83,5 +88,6 @@ const { Content, headings } = await render(post);
 		import '../../scripts/preview.ts';
 		import '../../scripts/footnotes.ts';
 		import '../../scripts/toc.ts';
+		import '../../scripts/share.ts';
 	</script>
 </BaseLayout>

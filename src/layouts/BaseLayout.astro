@@ -25,6 +25,8 @@ const siteDescription =
 const { title, description = siteDescription, home = false, type = 'website', publishedTime, tags = [], noindex = false, search = true } = Astro.props;
 const pageTitle = title ? `${title} · ${siteTitle}` : siteTitle;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+// Vorschaubild für geteilte Links (1200×630), liegt in public/
+const ogImage = new URL(url('/og-default.png'), Astro.site).href;
 
 const nav = [
 	{ label: 'Themen', href: url('/themen/') },
@@ -53,7 +55,12 @@ const Wordmark = home ? 'h1' : 'p';
 		<meta property="og:title" content={title ?? siteTitle} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />
-		<meta name="twitter:card" content="summary" />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Fidels Perspektive, der Blog von Fidel." />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:image" content={ogImage} />
 		{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
 		{type === 'article' && tags.map((tag) => <meta property="article:tag" content={tag} />)}
 		<link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
@@ -173,7 +180,7 @@ const Wordmark = home ? 'h1' : 'p';
 			<div class="wrap footer__row">
 				<span><span class="footer__name">{siteTitle}</span> · © {new Date().getFullYear()} Fidel</span>
 				<span>
-					<a href={url('/themen/')}>Themen</a> · <a href={url('/ueber-mich/')}>Über mich</a> · <a href={url('/suche/')}>Suche</a> · <a href={url('/rss.xml')}>RSS</a>
+					<a href={url('/beitraege/')}>Beiträge</a> · <a href={url('/themen/')}>Themen</a> · <a href={url('/ueber-mich/')}>Über mich</a> · <a href={url('/suche/')}>Suche</a> · <a href={url('/rss.xml')}>RSS</a>
 				</span>
 			</div>
 		</footer>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPosts } from '../utils/posts';
+import { url } from '../utils/url';
+
+const [latest] = await getPosts();
+---
+
+<BaseLayout title="Seite nicht gefunden" description="Diese Seite gibt es nicht." noindex>
+	<div class="text-page">
+		<h1 class="page-title">Diese Seite gibt es nicht</h1>
+		<div class="prose">
+			<p>Der Link ist vielleicht veraltet oder falsch geschrieben. Von hier aus geht es weiter:</p>
+			<ul>
+				{
+					latest && (
+						<li>
+							Zuletzt erschienen: <a href={url(`/beitraege/${latest.id}/`)}>{latest.data.title}</a>
+						</li>
+					)
+				}
+				<li><a href={url('/beitraege/')}>Alle Beiträge</a></li>
+				<li><a href={url('/suche/')}>Suchen</a></li>
+				<li><a href={url('/')}>Zur Startseite</a></li>
+			</ul>
+		</div>
+	</div>
+</BaseLayout>

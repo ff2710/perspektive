@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostMeta from '../../components/PostMeta.astro';
+import { getPosts } from '../../utils/posts';
+import { url } from '../../utils/url';
+
+const posts = await getPosts();
+---
+
+<BaseLayout title="Alle Beiträge" description="Alle Beiträge von Fidels Perspektive, die neuesten zuerst.">
+	<h1 class="page-title">Alle Beiträge</h1>
+	{
+		posts.length > 0 ? (
+			<ul class="post-list">
+				{posts.map((post) => (
+					<li class="post-list__item">
+						<h2 class="post-list__title">
+							<a href={url(`/beitraege/${post.id}/`)}>{post.data.title}</a>
+						</h2>
+						<p class="post-list__teaser">{post.data.description}</p>
+						<PostMeta post={post} />
+					</li>
+				))}
+			</ul>
+		) : (
+			<p class="empty">Noch keine Beiträge.</p>
+		)
+	}
+</BaseLayout>

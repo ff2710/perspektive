@@ -1652,3 +1652,48 @@ a.pill:hover {
 		margin: -0.7rem -0.6rem;
 	}
 }
+
+/* Archiv, 404 und Teilen */
+.latest__all {
+	margin: 1rem 0 0;
+	font-family: var(--sans);
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+.latest__all a {
+	color: var(--accent-text);
+	text-underline-offset: 3px;
+	text-decoration-color: var(--link-line);
+}
+.latest__all a:hover {
+	color: var(--contrast);
+}
+.share[hidden] {
+	display: none;
+}
+.share__button {
+	display: inline-flex;
+	align-items: center;
+	min-height: 2.5rem;
+	padding: 0 1.1rem;
+	border: 1px solid var(--ink);
+	border-radius: 99px;
+	background: transparent;
+	color: var(--ink);
+	font-family: var(--sans);
+	font-size: 0.9rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 150ms, transform 120ms var(--ease-out);
+}
+.share__button:hover {
+	background: var(--surface);
+}
+.share__button:active {
+	transform: scale(0.97);
+}
+@media (pointer: coarse) {
+	.share__button {
+		min-height: 2.75rem;
+	}
+}
