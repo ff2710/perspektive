@@ -71,9 +71,13 @@ Vier klar getrennte Zonen, je 5 rem Abstand:
 3. **Themen-Pills und Autorenkasten**: Nebenmaterial auf `--surface`, kleine gedämpfte Schrift.
 4. **Weiterlesen**: eigene Fläche in voller Breite, `--band` (nahezu Schwarz, im Dunkelmodus noch dunkler als der Grund), große Überschrift, Einträge in 1–3 Spalten mit Haarlinie oben.
 
+## Inhaltsverzeichnis
+
+Auf Bildschirmen ab 1000 px: dezente Striche im rechten Rand neben der Lesespalte (h2 lang, h3 kurz und eingerückt), mitlaufend (`position: sticky`). Der Abschnitt, in dem man liest, hat einen dickeren grünen Strich und fetten Titel (`aria-current="location"`). Bei Hover oder Tastaturfokus erscheinen die Titel. Erst ab drei Einträgen, unter 1000 px ausgeblendet.
+
 ## Hover-Vorschau
 
-Fußnotenzahlen und Inline-Links im Artikeltext zeigen nach 150 ms ein flaches Fenster (invertiert: `--ink` auf `--paper`, kein Schatten, kein Glas, Radius 0.375rem). Fußnoten: Text auf 4–8 Zeilen gekürzt (nach Fensterhöhe), mit „…", Fade der letzten Zeile (Maske, kein Farbverlauf) und Hinweis „Zum Weiterlesen anklicken". Externe Links: Domain fett, optionaler Titel aus dem Markdown-Link (`[Text](url "Titel")`), gekürzter Pfad. Interne Links: Beitragstitel. Nur für Maus und Stift und bei Tastaturfokus, Escape schließt, keine Netzwerkabfragen.
+Fußnotenzahlen und Inline-Links im Artikeltext zeigen nach 150 ms ein flaches Fenster (invertiert: `--ink` auf `--paper`, kein Schatten, kein Glas, Radius 0.375rem). Fußnoten: Text auf 4–8 Zeilen gekürzt (nach Fensterhöhe), mit „…", Fade der letzten Zeile (Maske, kein Farbverlauf) und Hinweis „Zum Weiterlesen anklicken". Externe Links: Domain fett, optionaler Titel aus dem Markdown-Link (`[Text](url "Titel")`), gekürzter Pfad. Interne Links: Beitragstitel mit Veröffentlichungsdatum in der gedämpften Nebenzeile. Nur für Maus und Stift und bei Tastaturfokus, Escape schließt, keine Netzwerkabfragen.
 
 ## Bilder
 

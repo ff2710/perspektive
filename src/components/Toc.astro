@@ -1,0 +1,26 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+// h2 und h3 des Artikels; die Fußnoten-Überschrift gehört nicht ins Verzeichnis.
+const items = Astro.props.headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug !== 'footnote-label');
+---
+
+{
+	items.length >= 3 && (
+		<nav class="toc" aria-label="Inhaltsverzeichnis" data-toc>
+			<ol>
+				{items.map((h) => (
+					<li class={h.depth === 3 ? 'toc__sub' : undefined}>
+						<a href={`#${h.slug}`}>
+							<span class="toc__text">{h.text}</span>
+						</a>
+					</li>
+				))}
+			</ol>
+		</nav>
+	)
+}

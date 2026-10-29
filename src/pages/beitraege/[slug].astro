@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Pills from '../../components/Pills.astro';
 import PostMeta from '../../components/PostMeta.astro';
+import Toc from '../../components/Toc.astro';
 import { formatDate, getPosts, readingMinutes } from '../../utils/posts';
 import { url } from '../../utils/url';
 
@@ -23,33 +24,36 @@ const linkIndex = Object.fromEntries([
 	[url('/themen/'), { title: 'Themen' }],
 ]);
 const linkIndexJson = JSON.stringify(linkIndex).replace(/</g, '\\u003c');
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-	<article class="article">
-		<header class="article__head">
-			<h1 class="page-title">{post.data.title}</h1>
-			<p class="dek">{post.data.description}</p>
-			<PostMeta post={post} />
-			<Pills tags={post.data.tags} />
-		</header>
+	<div class="article-wrap">
+		<Toc headings={headings} />
+		<article class="article">
+			<header class="article__head">
+				<h1 class="page-title">{post.data.title}</h1>
+				<p class="dek">{post.data.description}</p>
+				<PostMeta post={post} />
+				<Pills tags={post.data.tags} />
+			</header>
 
-		<div class="prose">
-			<Content />
-		</div>
+			<div class="prose">
+				<Content />
+			</div>
 
-		<footer class="article__foot">
-			<Pills tags={post.data.tags} />
+			<footer class="article__foot">
+				<Pills tags={post.data.tags} />
 
-			<aside class="author" aria-label="Über den Autor">
-				<b>Fidel</b>
-				<p>Politikwissenschaftsstudent. Ich teile hier meine Perspektive zu aktuellen politischen Themen.</p>
-				<p><a href={url('/ueber-mich/')}>Mehr über mich</a></p>
-			</aside>
+				<aside class="author" aria-label="Über den Autor">
+					<b>Fidel</b>
+					<p>Politikwissenschaftsstudent. Ich teile hier meine Perspektive zu aktuellen politischen Themen.</p>
+					<p><a href={url('/ueber-mich/')}>Mehr über mich</a></p>
+				</aside>
 
-		</footer>
-	</article>
+			</footer>
+		</article>
+	</div>
 
 	{
 		others.length > 0 && (
@@ -77,5 +81,6 @@ const { Content } = await render(post);
 	<script>
 		import '../../scripts/preview.ts';
 		import '../../scripts/footnotes.ts';
+		import '../../scripts/toc.ts';
 	</script>
 </BaseLayout>
