@@ -30,7 +30,7 @@ Quelle: Palette „Keimling und Himmel" (`#FFFEFB #D7F9F1 #9BE7FF #3A86FF #2D6A4
 
 | Rolle | Token | Hell | Dunkel |
 |---|---|---|---|
-| Seitengrund (warmes, pastelliges Off-White) | `--paper` | `#F6F1E7` | `#161616` |
+| Seitengrund (warmes, pastelliges Off-White) | `--paper` | `#FAF8F3` | `#161616` |
 | Lesefläche der Beiträge (echtes Weiß, über die volle Breite) | `--sheet` | `#FFFFFF` | `#161616` |
 | Text | `--ink` | `#0F1A14` | `#ECECEC` (15,3:1) |
 | Gedämpfter Text | `--muted` | `#5A665E` (5,9:1) | `#A8A8A8` (7,5:1; auf Aufmacher 5,1:1) |
@@ -90,7 +90,7 @@ Eigene Seite `/suche/` (in der Navigation), große Eingabezeile mit dicker Linie
 
 Das **P** ist das Zeichen und ersetzt das P im Schriftzug „Perspektive". Es ist selbst gezeichnet, nicht aus einer Schrift: ein Stamm (Waldgrün `#2D6A4F`, im Dunkeln aufgehellt `#5FA17F`) und ein Bogen (Salbei `#A9DFC0`) mit besonders kräftiger Oberkante und offenem Auge. Beide Teile sind durch einen schmalen Schrägschnitt getrennt, der Bogen greift diagonal in den Stamm. Die Oberkante des Stamms ist im selben Winkel (16°) angeschnitten wie der Schnitt. Es ist etwas höher als die Kleinbuchstaben und steht auf der Grundlinie. Der Rest des Wortes bleibt Archivo 700/85 %. Unter dem Schriftzug liegt ein dünner Strich in Himmelblau (`--link-line`).
 
-Dieselbe Form liefert alle Zeichen: `public/favicon.svg` (hell und dunkel per `prefers-color-scheme`), `favicon.ico` (16/32/48), `apple-touch-icon.png` (180, auf Papierfarbe) und das Vorschaubild `og-default.png`. Im Kopf ist das P ein Inline-SVG (`.wordmark__p`), damit es beim Scrollen auf der Startseite fett bleibt, während der Rest des Wortes leichter wird. Der Salbei-Bogen hat auf Weiß 1,5:1 und auf dem Off-White 1,33:1 Kontrast: Er ist Zierde, Stamm und Schriftzug tragen die Lesbarkeit. Das warme Off-White hebt ihn eher über den Farbton als über die Helligkeit ab.
+Dieselbe Form liefert alle Zeichen: `public/favicon.svg` (hell und dunkel per `prefers-color-scheme`), `favicon.ico` (16/32/48), `apple-touch-icon.png` (180, auf Papierfarbe) und das Vorschaubild `og-default.png`. Im Kopf ist das P ein Inline-SVG (`.wordmark__p`), damit es beim Scrollen auf der Startseite fett bleibt, während der Rest des Wortes leichter wird. Der Salbei-Bogen hat auf Weiß 1,5:1 und auf dem Off-White 1,4:1 Kontrast: Er ist Zierde, Stamm und Schriftzug tragen die Lesbarkeit. Das warme Off-White hebt ihn eher über den Farbton als über die Helligkeit ab.
 
 ## Bilder
 

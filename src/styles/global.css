@@ -3,7 +3,7 @@
 :root {
 	color-scheme: light;
 
-	--paper: #f6f1e7; /* Seitengrund: warmes, pastelliges Off-White */
+	--paper: #faf8f3; /* Seitengrund: warmes, pastelliges Off-White */
 	--sheet: #ffffff; /* Lesefläche der Beiträge: echtes Weiß */
 	--ink: #0f1a14;
 	--muted: #5a665e;
