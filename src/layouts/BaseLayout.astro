@@ -74,6 +74,7 @@ const Wordmark = home ? 'h1' : 'p';
 		{type === 'article' && tags.map((tag) => <meta property="article:tag" content={tag} />)}
 		<link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
 		<link rel="icon" href={url('/favicon.ico')} />
+		<link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
 		<title>{pageTitle}</title>
 		<script is:inline>
 			// Theme vor dem ersten Rendern setzen (kein Aufblitzen). Standard ist immer Hell.
@@ -122,7 +123,17 @@ const Wordmark = home ? 'h1' : 'p';
 
 		<header class="masthead wrap">
 			<div class="masthead__row">
-				<Wordmark class="wordmark"><a href={url('/')}>{siteTitle}</a></Wordmark>
+				<Wordmark class="wordmark">
+					<a href={url('/')}>
+						<span class="visually-hidden">{siteTitle}</span>
+						<span class="wordmark__text" aria-hidden="true">
+							<!-- Das P ist die Wortmarke: gleiche Form wie im Favicon (public/favicon.svg), Stamm und Bogen getrennt einfärbbar. -->
+							<svg class="wordmark__p" viewBox="0 0 560 700" focusable="false"
+								><path class="wordmark__stem" d="M0 70L150 10V700H0Z" /><path class="wordmark__bowl" fill-rule="evenodd" d="M186 10H330A220 220 0 0 1 330 450H186Z M186 150H322.5A102.5 102.5 0 0 1 322.5 355H186Z" /></svg
+							>{siteTitle.slice(1)}
+						</span>
+					</a>
+				</Wordmark>
 				<nav class="nav" aria-label="Hauptnavigation">
 					{
 						nav.map((item) => (

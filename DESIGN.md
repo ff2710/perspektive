@@ -85,6 +85,12 @@ Fußnotenzahlen und Inline-Links im Artikeltext zeigen nach 150 ms ein flaches F
 
 Eigene Seite `/suche/` (in der Navigation), große Eingabezeile mit dicker Linie darunter (Archivo 650), Ergebnisse als Liste mit Haarlinien wie die Themenseiten: Titel, Auszug mit Treffer in `--mark`, Datum. Treffer werden über den statischen Pagefind-Index gefunden (nur Artikeltext, ohne Meta-Zeile, Pills und Autorenkasten). Die Seite ist `noindex`. Im Dev-Server gibt es keinen Index, dort erscheint ein kurzer Hinweis.
 
+## Zeichen und Schriftzug (Entscheidung Fidel, 30.10.2026)
+
+Das **P** ist das Zeichen und ersetzt das P im Schriftzug „Perspektive". Es ist selbst gezeichnet, nicht aus einer Schrift: ein Stamm mit schräg angeschnittener Oberkante (Waldgrün `#2D6A4F`, im Dunkeln aufgehellt `#5FA17F`) und, durch einen schmalen Spalt getrennt, ein Bogen mit kräftigerer Oberkante und offenem Auge (Salbei `#A9DFC0`). Es ist etwas höher als die Kleinbuchstaben und steht auf der Grundlinie. Der Rest des Wortes bleibt Archivo 700/85 %. Unter dem Schriftzug liegt ein dünner Strich in Himmelblau (`--link-line`).
+
+Dieselbe Form liefert alle Zeichen: `public/favicon.svg` (hell und dunkel per `prefers-color-scheme`), `favicon.ico` (16/32/48), `apple-touch-icon.png` (180, auf Papierfarbe) und das Vorschaubild `og-default.png`. Im Kopf ist das P ein Inline-SVG (`.wordmark__p`), damit es beim Scrollen auf der Startseite fett bleibt, während der Rest des Wortes leichter wird. Nachteil: Der Salbei-Bogen hat auf hellem Grund nur etwa 1,5:1 Kontrast; er ist Zierde, der Stamm und der Schriftzug tragen die Lesbarkeit.
+
 ## Bilder
 
 Keine nötig. Wenn vorhanden: groß, randlos, ruhiger Beschnitt, Alt-Text Pflicht, Quellenzeile darunter. Ohne Bild trägt die Typo-Fläche den Aufmacher.

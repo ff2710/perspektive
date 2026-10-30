@@ -12,6 +12,7 @@
 	--accent: #a9dfc0;
 	--accent-tint: #e4f4ea;
 	--accent-text: #2d6a4f;
+	--logo-stem: #2d6a4f;
 	--contrast: #1b5fc4;
 	--mark: #9be7ff;
 	--switch-track: #e6ebe6;
@@ -45,6 +46,7 @@
 	--feature: #353535;
 	--accent-tint: #25382c;
 	--accent-text: #a9dfc0;
+	--logo-stem: #5fa17f;
 	--contrast: #8db8ff;
 	--mark: #1f4d66;
 	--switch-track: #2b2b2b;
@@ -171,6 +173,31 @@ img {
 }
 .wordmark a {
 	text-decoration: none;
+}
+/* Das P: Stamm in Grün, Bogen in Salbei, oben kräftiger als unten. Es steht auf der Grundlinie und ist etwas größer als die Kleinbuchstaben. */
+.wordmark__text {
+	display: inline-block;
+	position: relative;
+}
+.wordmark__p {
+	height: 0.76em;
+	width: 0.608em;
+	margin-right: 0.035em;
+	overflow: visible;
+}
+.wordmark__stem {
+	fill: var(--logo-stem);
+}
+.wordmark__bowl {
+	fill: var(--accent);
+}
+/* dünner hellblauer Strich unter dem Schriftzug */
+.wordmark__text::after {
+	content: '';
+	display: block;
+	height: max(2px, 0.04em);
+	margin-top: 0.14em;
+	background: var(--link-line);
 }
 .is-home .wordmark {
 	font-size: clamp(2.4rem, 7vw, 5rem);
