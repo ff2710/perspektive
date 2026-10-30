@@ -53,7 +53,7 @@ const Wordmark = home ? 'h1' : 'p';
 		<link rel="preload" as="font" type="font/woff2" href={serifFont} crossorigin />
 		{italic && <link rel="preload" as="font" type="font/woff2" href={serifItalicFont} crossorigin />}
 		<meta name="author" content="Fidel" />
-		<meta name="theme-color" content="#fffefb" />
+		<meta name="theme-color" content="#f6f1e7" />
 		{noindex && <meta name="robots" content="noindex" />}
 		<link rel="canonical" href={canonical} />
 		<link rel="alternate" type="application/rss+xml" title={siteTitle} href={url('/rss.xml')} />
@@ -129,7 +129,7 @@ const Wordmark = home ? 'h1' : 'p';
 						<span class="wordmark__text" aria-hidden="true">
 							<!-- Das P ist die Wortmarke: gleiche Form wie im Favicon (public/favicon.svg), Stamm und Bogen getrennt einfärbbar. -->
 							<svg class="wordmark__p" viewBox="0 0 560 700" focusable="false"
-								><path class="wordmark__stem" d="M0 70L150 10V700H0Z" /><path class="wordmark__bowl" fill-rule="evenodd" d="M186 10H330A220 220 0 0 1 330 450H186Z M186 150H322.5A102.5 102.5 0 0 1 322.5 355H186Z" /></svg
+								><defs><clipPath id="wmg"><polygon points="-100,100.3 215,10 88.8,450 800,450 800,750 -100,750"/></clipPath><clipPath id="wms"><polygon points="262.2,-50 800,-50 800,450 118.8,450"/></clipPath></defs><g clip-path="url(#wmg)"><path class="wordmark__stem" fill-rule="evenodd" d="M0 10H330A220 220 0 0 1 330 450H165V700H0Z M165 175H337.5A87.5 87.5 0 0 1 337.5 355H165Z"/></g><g clip-path="url(#wms)"><path class="wordmark__bowl" fill-rule="evenodd" d="M0 10H330A220 220 0 0 1 330 450H165V700H0Z M165 175H337.5A87.5 87.5 0 0 1 337.5 355H165Z"/></g></svg
 							>{siteTitle.slice(1)}
 						</span>
 					</a>

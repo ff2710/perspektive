@@ -3,7 +3,8 @@
 :root {
 	color-scheme: light;
 
-	--paper: #fffefb;
+	--paper: #f6f1e7; /* Seitengrund: warmes, pastelliges Off-White */
+	--sheet: #ffffff; /* Lesefläche der Beiträge: echtes Weiß */
 	--ink: #0f1a14;
 	--muted: #5a665e;
 	--line: #c9d3cc;
@@ -39,6 +40,7 @@
 	color-scheme: dark;
 
 	--paper: #161616;
+	--sheet: #161616;
 	--ink: #ececec;
 	--muted: #a8a8a8;
 	--line: #404040;
@@ -777,6 +779,13 @@ a.pill:hover {
 	max-width: var(--measure);
 	margin-inline: auto;
 }
+/* Beiträge stehen auf echtem Weiß, über die volle Breite; der Rest der Seite auf dem Off-White */
+.article-wrap {
+	background: var(--sheet);
+	box-shadow: 0 0 0 100vmax var(--sheet);
+	clip-path: inset(0 -100vmax);
+}
+
 /* Inhaltsverzeichnis: dezente Striche im rechten Rand, nur auf breiten Bildschirmen */
 .toc {
 	display: none;
