@@ -72,8 +72,9 @@ const Wordmark = home ? 'h1' : 'p';
 		<meta name="twitter:image" content={ogImage} />
 		{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
 		{type === 'article' && tags.map((tag) => <meta property="article:tag" content={tag} />)}
-		<link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
-		<link rel="icon" href={url('/favicon.ico')} />
+		<link rel="icon" href={url('/favicon.ico')} sizes="48x48" />
+		<link rel="icon" type="image/png" href={url('/favicon-192.png')} sizes="192x192" />
+		<link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} sizes="any" />
 		<link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
 		<title>{pageTitle}</title>
 		<script is:inline>
