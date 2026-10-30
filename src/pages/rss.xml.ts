@@ -6,7 +6,7 @@ import { url } from '../utils/url';
 export async function GET(context: APIContext) {
 	const posts = await getPosts();
 	return rss({
-		title: 'Fidels Perspektive',
+		title: 'Perspektive',
 		description: 'Ich bin Fidel, Politikwissenschaftsstudent, und teile hier meine Perspektive zu aktuellen politischen Themen.',
 		site: new URL(url('/'), context.site).href,
 		items: posts.map((post) => ({

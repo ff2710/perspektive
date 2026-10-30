@@ -90,7 +90,7 @@ function describe(a: HTMLAnchorElement): Content | null {
 	const entry = linkIndex[key];
 	const note = entry ? ['Auf diesem Blog', entry.date].filter(Boolean).join(' · ') : shortPath(a.pathname);
 	return {
-		nodes: [el('p', 'preview__host', entry?.title ?? 'Fidels Perspektive'), el('p', 'preview__path', note)],
+		nodes: [el('p', 'preview__host', entry?.title ?? 'Perspektive'), el('p', 'preview__path', note)],
 		footnote: false,
 	};
 }

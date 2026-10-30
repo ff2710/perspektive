@@ -91,7 +91,7 @@ Gelten für Inhalte, nicht für Code. Der Blog muss sie gut unterstützen.
 
 ## Offen / Annahmen
 
-- Blogname vorerst **„Fidels Perspektive"** (Entscheidung 29.10.2026, „erstmal"). Genauer Seitentitel/Tagline noch offen.
-- GitHub-Repo `perspektive` ist noch nicht auf GitHub angelegt (Anlegen/Push nur nach Fidels OK).
+- Blogname vorerst **„Perspektive"** (Entscheidung 29.10.2026, „erstmal"). Genauer Seitentitel/Tagline noch offen.
+- GitHub-Repo `perspektive` ist angelegt, Seite ist live unter https://ff2710.github.io/perspektive/ (Pages-Quelle: GitHub Actions). Push nur nach Fidels OK.
 - Impressum-Angaben (Phase 7).
 - Falls später gewünscht (nicht in v1): Kommentare über giscus, Newsletter, Editor auf der Live-Seite mit GitHub-Login.

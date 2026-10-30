@@ -12,7 +12,7 @@ Politisch interessierte, gebildete Laien ohne Fachstudium. Sie kommen meist übe
 
 ## Product Purpose
 
-„Fidels Perspektive" (Arbeitstitel, Entscheidung 29.10.2026: „erstmal") ist der persönliche Blog von Fidel, Politikwissenschaftsstudent. Er teilt dort seine Perspektive zu aktuellen politischen Themen, an der Schnittstelle von wissenschaftlicher Erkenntnis und Meinung.
+„Perspektive" (Arbeitstitel, Entscheidung 29.10.2026: „erstmal") ist der persönliche Blog von Fidel, Politikwissenschaftsstudent. Er teilt dort seine Perspektive zu aktuellen politischen Themen, an der Schnittstelle von wissenschaftlicher Erkenntnis und Meinung.
 
 Der Blog soll drei Dinge leisten:
 - Fidels eigene Stimme öffentlich machen und seine Gedanken ordnen.
@@ -43,7 +43,7 @@ Wissenschaftliche Erkenntnisse und Meinung sind klar getrennt, jede Aussage ist 
 
 ## Brand Commitments
 
-- Name vorerst „Fidels Perspektive", Repo `perspektive`.
+- Name vorerst „Perspektive", Repo `perspektive`.
 - Seitenbeschreibung (aus dem Plan): „Ich bin Fidel, Politikwissenschaftsstudent und teile hier meine Perspektive zu aktuellen politischen Themen."
 - Ton: persönlich, aber sachlich. Meinung ohne Label, nur über Formulierungen wie „für mich" oder „meiner Ansicht nach"; Faktensätze enthalten kein „ich".
 - Kein lila Verlauf, keine Template- oder Standard-KI-Optik (bindende Vorgabe von Fidel).

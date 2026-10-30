@@ -1,4 +1,4 @@
-# Design: Fidels Perspektive
+# Design: Perspektive
 
 Verbindlich für alles Gestalterische. Quellen: `DESIGN-BRIEF.md` (Fidels Briefing), `PRODUCT.md`, Fidels Wahl vom 29.10.2026 (Mischung aus A und C: **G3, K4, H3, S2**, Palette „Keimling und Himmel"). Bei Widerspruch zu `PLAN.md` gilt diese Datei. Animationen kommen erst in Phase 5.
 

@@ -1,4 +1,4 @@
-# Design-Briefing: Fidels Perspektive
+# Design-Briefing: Perspektive
 
 _Antwortgrundlage für `/impeccable init` und für Taste. Stand 29.10.2026. Bei Widerspruch zu `PLAN.md` gilt dieses Briefing für alles Gestalterische._
 
@@ -18,7 +18,7 @@ Persönlichkeit in drei Wörtern: **klar, streitbar, belegt.**
 
 ## Was nicht übernommen wird
 
-- Keine Kopie von Logos, Schriftzügen oder Markenzeichen. Es entsteht ein eigener Schriftzug „Fidels Perspektive".
+- Keine Kopie von Logos, Schriftzügen oder Markenzeichen. Es entsteht ein eigener Schriftzug „Perspektive".
 - Kein Abo-Banner, keine Paywall-Anmutung, keine Beifall-/Folgen-Buttons.
 - Kein lila Verlauf, keine glatte Startup-Optik, keine Standardkarten mit Schlagschatten, keine Stockfoto-Ästhetik.
 
